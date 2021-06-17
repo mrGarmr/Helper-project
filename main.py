@@ -21,9 +21,12 @@ def main():
         if command=="load":
             print(r'Please write the full path to file. Example: "d:\test\book.txt":')
             path=str(input())
-            with open(path, 'rb') as fh:
-                book = pickle.load(fh)
-                break
+            try:
+                with open(path, 'rb') as fh:
+                    book = pickle.load(fh)
+                    break
+            except:
+                 print('Please write wright path to file! This file is empty!')
 
         elif command=='new':
             print(r'Please write the full path where to create file. Example: "d:\test\book.txt":')
