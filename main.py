@@ -1,4 +1,4 @@
-from ClassBook import *
+#from ClassBook import *
 import pickle
 
 
@@ -146,7 +146,8 @@ def show():
         
         #counter+=1
         print(79*'_')
-     
+
+
 @error_handler
 def help_func():
     print(40*'*')
@@ -171,23 +172,24 @@ def main():
     while True:
         print('What do you want to do?\nYou can use commands: "load" to load Adress Book and "new" to create new Book or "exit"/"close" to close application:')
         command=str(input())
-
         if command=="load":
             print(r'Please write the full path to file. Example: "d:\test\book.txt":')
             path=str(input())
-            with open(path, 'rb') as fh:
-                book = pickle.load(fh)
-                if book == []:
-                    print('Your Adress Book is empty. Use command "new": ')
-                    command=str(input())
-                    book=AddressBook()
+            try:
+                with open(path, 'rb') as fh:
+                    book = pickle.load(fh)
+                    break
+            except:
+                 print('Please write wright path to file! This file is empty!')
+
         elif command=='new':
             print(r'Please write the full path where to create file. Example: "d:\test\book.txt":')
             path=str(input())
             book=AddressBook()
-            break   
+            break
+ 
         elif command=='exit' or command=='esc' or command=='close':
-            esc=False
+            esc_e=False
             break
         else:
             print('Wrong command.')
@@ -201,6 +203,7 @@ def main():
             pass
         else:
             break
+ 
  
 
 if __name__ =='__main__':
