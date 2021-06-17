@@ -1,7 +1,7 @@
-import pickle
 import re
 from collections import UserList
 from datetime import datetime,timedelta,date
+
 
 class Field:
     def __init__(self,value):
@@ -14,6 +14,81 @@ class Field:
     @value.setter
     def value(self,new_value):
         self.__value=new_value
+
+
+class Name(Field):
+    def __init__(self,name):
+        self.name=name
+        
+
+class Address(Field):
+    def __init__(self, address):
+        self.address = address
+
+
+class Remark(Field):
+    def __init__(self, address):
+        self.address = address
+
+
+class Email(Field):
+    def __init__(self, value):
+        self.__email = None
+        self.email = value
+
+    @property
+    def value(self):
+        return self.__email
+
+    @value.setter
+    def value(self, value):
+        if re.match('([a-zA-Z][a-zA-Z0-9\._!#$%^*=\-]{1,}@[a-zA-Z]+\.[a-zA-Z]{2,})', value):
+            self.__email = value
+        else :
+            print('Format is wrong. Try again')
+
+
+class Birthday(Field):
+    def __init__(self,value):
+        self.__birthday = None
+        self.birthday=value
+        
+    @property
+    def birthday(self):
+        return self.__birthday.strftime('%d.%m.%Y')
+        
+
+    @birthday.setter
+    def birthday(self, birthday):
+        try:
+            self.__birthday = datetime.strptime(birthday, '%d.%m.%Y')
+        except Exception:
+            print("Incorrect format, expected day.month.year (Example:25.12.1970)")
+
+
+class Phone(Field):
+    def __init__(self,phone):
+        phones=[]
+        self.phones =list()
+        self.__phone=phone
+        
+    @property  
+    def phone(self):
+        return self.__phone
+
+    @phone.setter    
+    def phone(self,value):
+        self.__phone=''
+        if re.match('[+]?[0-9]{12}',value):
+            self.__phone=value
+        else:
+            print('Phone must start with + and have 12 digits. Example +380501234567 SETT')          
+    
+    #def __str__(self):
+        #return self.phone
+    def __repr__(self):
+        return self.phone
+
 
 class AddressBook(UserList):
     
@@ -38,12 +113,10 @@ class AddressBook(UserList):
                         for j in value:
                             j=j.lower()
                             if j.find(f_value)!=-1:
-                                result.append(i)                  
-                        
+                                result.append(i)                             
         return result
-                    
-        
-    def iterator(self,n=2):
+                      
+    def iterator(self,n):
         f=1
         k = 0
         result=[]
@@ -57,38 +130,40 @@ class AddressBook(UserList):
             else:
                 break
     
-class Birthday(Field):
-    def __init__(self,value):
-        self.__birthday = None
-        self.birthday=value
-        
-    @property
-    def birthday(self):
-        return self.__birthday.strftime('%d.%m.%Y')
-        
-
-    @birthday.setter
-    def birthday(self, birthday):
-        try:
-            self.__birthday = datetime.strptime(birthday, '%d.%m.%Y')
-        except Exception:
-            print("Incorrect format, expected day.month.year (Example:25.12.1970)")
 
 class Record:
-    def __init__(self,name,phones=None, birthday=None):
-        #self.name = name
+    def __init__(self,name,phones=None, birthday=None, address=None, email=None, remark=''):
+        self.name = name
         self.phones = []
         self.birthday = None
         self.user = {'Name': name.name, 'Phones': self.phones, 'Birthday': self.birthday}
-        
-    def add_phone(self, phone):
-        phone=str(phone)
-        try:
-            num=re.match('[+]?[0-9]{12}', phone)
-            if num:
-                self.phones.append(phone)
-        except:
-            print('Phone must start with + and have 12 digits. Example +380501234567 ADD')          
+        self.address = None
+        self.email = None
+        self.remark = ''
+
+    def add_address(self, address):
+        self.address = address
+
+    def add_email(self, email):
+        self.email = email
+
+    def add_remark(self, remark):
+        self.remark = remark
+
+    def show_birthday_peaple(self):
+        n = int(input('Enter the number of days: '))
+        current_day = datetime.now()
+        days_interval = timedelta(days=n)
+        fun_day = current_day + days_interval
+        contacts_list = []
+        for self.name in self.data:
+            info_list = self.data.get(self.name)
+            if self.birthday in info_list:
+                date_birthday = datetime.strptime(self.birthday, "%d-%m-%y")
+                if date_birthday == fun_day.date():
+                    contacts_list.append(self.name)
+        result = print(contacts_list)
+        return result
     
     def days_to_birthday(self):
         if self.birthday:
@@ -112,28 +187,3 @@ class Record:
         self.add_phone(new_phone)
 
 
-class Name(Field):
-    def __init__(self,name):
-        self.name=name
-        
-class Phone(Field):
-    def __init__(self,phone):
-        phones=[]
-        self.phones =list()
-        self.__phone=phone
-        
-    @property  
-    def phone(self):
-        return self.__phone
-    @phone.setter    
-    def phone(self,value):
-        self.__phone=''
-        if re.match('[+]?[0-9]{12}',value):
-            self.__phone=value
-        else:
-            print('Phone must start with + and have 12 digits. Example +380501234567 SETT')          
-    
-    #def __str__(self):
-        #return self.phone
-    def __repr__(self):
-        return self.phone

@@ -1,4 +1,6 @@
-import ClassBook
+from ClassBook import *
+import pickle
+
 
 def error_handler(func):
     def inner(*args):
@@ -9,46 +11,6 @@ def error_handler(func):
             result=input_error()
             return result
     return inner
-
-
-@error_handler
-def main():
-    global path, book, esc_e
-    esc_e=True
-    while True:
-        print('What do you want to do?\nYou can use commands: "load" to load Adress Book and "new" to create new Book or "exit"/"close" to close application:')
-        command=str(input())
-        if command=="load":
-            print(r'Please write the full path to file. Example: "d:\test\book.txt":')
-            path=str(input())
-            with open(path, 'rb') as fh:
-                book = pickle.load(fh)
-                break
-
-        elif command=='new':
-            print(r'Please write the full path where to create file. Example: "d:\test\book.txt":')
-            path=str(input())
-            book=AddressBook()
-            break
-            
-
-        elif command=='exit' or command=='esc' or command=='close':
-            esc=False
-            break
-        else:
-            print('Wrong command.')
-
-    while esc_e:
-        user_input=input('What do you want to do? Type "help" for additional commands.\n')
-        result=handler(user_input)
-        if result:
-            print(result)
-        elif result==None:
-            pass
-        else:
-            break
- 
-
 
 
 @error_handler
@@ -94,19 +56,20 @@ def add():
             say='Successfully changed'
             return say
 
-    
+
 @error_handler     
 def change():
     global book, esc_e
     print('To change name: type "name", to change phone: type "phone", to change birthday: type "birthday"')
     decicion=str(input())
     decicion=decicion.lower()
+
     if decicion=='name':
         print('Type name you want to change')
         old_name=str(input())
         old_name=old_name.lower()
         print('Type new name')
-        new_name=str(input())
+        new_name=str(input())        
         for i in book:
             if i['Name'].lower()==old_name:
                 i['Name']=new_name
@@ -127,8 +90,9 @@ def change():
                     i['Phones'].append(new_name)
                     say='Successfully changed'
                     return say
-            else:
-                print(f'{old_name} not in Adress Book')
+                else:
+                    print(f'{old_name} not in Adress Book')
+
     elif decicion=='birthday':
         print('Type birthday you want to change. Expected day.month.year(Example:25.12.1970)')
         old_name=str(input())
@@ -152,18 +116,21 @@ def find():
     print('Put information you want to find')
     find_v=str(input())
     result=book.find_value(find_v)
-    return result  
+    return result 
+
+@error_handler
 def exit():
     global esc_e
     save()
     esc_e=False
     return "Good Bye"
 
+@error_handler
 def save():
     global path, book
     with open(path, 'wb') as fh:
         pickle.dump(book, fh)
-        #return 'Successfully saved'
+        return 'Successfully saved'
 
 @error_handler
 def show():
@@ -180,12 +147,12 @@ def show():
         #counter+=1
         print(79*'_')
      
-
+@error_handler
 def help_func():
     print(40*'*')
     print('*Type "add"    to add new contact.\n*Type "change" to change contact\'s phone, name or birthday.\n*Type "find"   to see information that you are looking for.\n*Type "show"   to show you all phonebook.\n*Type "save"   to save and exit.\n*Type "exit"   to exit')
-
     return (40*'*')
+
 @error_handler   
 def handler(user_input):
     if user_input in ANSWEARS.keys():
@@ -193,13 +160,50 @@ def handler(user_input):
     else:
         return input_error()
 
+@error_handler
 def input_error():
     return 'Wrong input! Type "help" for commands or "exit" to exit'
 
+@error_handler
+def main():
+    global path, book, esc_e
+    esc_e=True
+    while True:
+        print('What do you want to do?\nYou can use commands: "load" to load Adress Book and "new" to create new Book or "exit"/"close" to close application:')
+        command=str(input())
+
+        if command=="load":
+            print(r'Please write the full path to file. Example: "d:\test\book.txt":')
+            path=str(input())
+            with open(path, 'rb') as fh:
+                book = pickle.load(fh)
+                if book == []:
+                    print('Your Adress Book is empty. Use command "new": ')
+                    command=str(input())
+                    book=AddressBook()
+        elif command=='new':
+            print(r'Please write the full path where to create file. Example: "d:\test\book.txt":')
+            path=str(input())
+            book=AddressBook()
+            break   
+        elif command=='exit' or command=='esc' or command=='close':
+            esc=False
+            break
+        else:
+            print('Wrong command.')
+
+    while esc_e:
+        user_input=input('What do you want to do? Type "help" for additional commands.\n')
+        result=handler(user_input)
+        if result:
+            print(result)
+        elif result==None:
+            pass
+        else:
+            break
+ 
 
 if __name__ =='__main__':
     main()
     
-ANSWEARS={'add': add, 'change': change, 'close': exit, 'exit': exit, 'find':find, 'help': help_func, 'save': save, 'show': show}    
-
-       
+ANSWEARS={'add': add, 'change': change, 'close': exit, 'exit': exit, 'find': find, 'help': help_func, 'save': save, 'show': show}    
