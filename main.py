@@ -1,4 +1,4 @@
-import ClassBook
+from ClassBook import *
 
 def error_handler(func):
     def inner(*args):
