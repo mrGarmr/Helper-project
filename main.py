@@ -154,6 +154,8 @@ def help_func():
     print('*Type "add"    to add new contact.\n*Type "change" to change contact\'s phone, name or birthday.\n*Type "find"   to see information that you are looking for.\n*Type "show"   to show you all phonebook.\n*Type "save"   to save and exit.\n*Type "exit"   to exit')
     return (40*'*')
 
+ANSWEARS={'add': add, 'change': change, 'close': exit, 'exit': exit, 'find': find, 'help': help_func, 'save': save, 'show': show} 
+
 @error_handler   
 def handler(user_input):
     if user_input in ANSWEARS.keys():
@@ -165,7 +167,7 @@ def handler(user_input):
 def input_error():
     return 'Wrong input! Type "help" for commands or "exit" to exit'
 
-@error_handler
+'''@error_handler
 def main():
     global path, book, esc_e
     esc_e=True
@@ -202,11 +204,46 @@ def main():
         elif result==None:
             pass
         else:
-            break
+            break'''
  
  
 
 if __name__ =='__main__':
-    main()
+    #main()
     
-ANSWEARS={'add': add, 'change': change, 'close': exit, 'exit': exit, 'find': find, 'help': help_func, 'save': save, 'show': show}    
+    global path, book, esc_e
+    esc_e=True
+    while True:
+        print('What do you want to do?\nYou can use commands: "load" to load Adress Book and "new" to create new Book or "exit"/"close" to close application:')
+        command=str(input())
+        if command=="load":
+            print(r'Please write the full path to file. Example: "d:\test\book.txt":')
+            path=str(input())
+            try:
+                with open(path, 'rb') as fh:
+                    book = pickle.load(fh)
+                    break
+            except:
+                 print('Please write wright path to file! This file is empty!')
+
+        elif command=='new':
+            print(r'Please write the full path where to create file. Example: "d:\test\book.txt":')
+            path=str(input())
+            book=AddressBook()
+            break
+ 
+        elif command=='exit' or command=='esc' or command=='close':
+            esc_e=False
+            break
+        else:
+            print('Wrong command.')
+
+    while esc_e:
+        user_input=input('What do you want to do? Type "help" for additional commands.\n')
+        result=handler(user_input)
+        if result:
+            print(result)
+        elif result==None:
+            pass
+        else:
+            break

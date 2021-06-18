@@ -44,5 +44,5 @@ def show():
         print('Your phonebook is empty')
     else:
         n = int(input('How many records should I show at once? ')) #ну, или просто 
-        result = book.iterator(n)
+        result = book.iterator1(n)
         return result

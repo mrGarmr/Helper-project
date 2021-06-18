@@ -141,6 +141,15 @@ class Record:
         self.email = None
         self.remark = ''
 
+    def add_phone(self, phone):
+        phone=str(phone)
+        try:
+            num=re.match('[+]?[0-9]{12}', phone)
+            if num:
+                self.phones.append(phone)
+        except:
+            print('Phone must start with + and have 12 digits. Example +380501234567 ADD')       
+
     def add_address(self, address):
         self.address = address
 
