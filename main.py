@@ -1,5 +1,5 @@
-import ClassBook
-from notes_book import *
+from ClassBook import *
+from notes_book import NotesBook
 
 
 def error_handler(func):
@@ -8,6 +8,7 @@ def error_handler(func):
             result = func(*args)
             return result
         except:
+            print('я внутри error_handler ')
             result = input_error()
             return result
     return inner
@@ -195,6 +196,76 @@ def show():
         # counter+=1
         print(79*'_')
 
+##############################################################
+# Команды для Handler для работы с NotesBook
+
+
+@error_handler
+def add_note():
+    print('Please input your note:')
+    # ввод многострочной заметки
+    lines = []
+    flag = True
+    while flag:
+        line = input()
+        if line:
+            lines.append(line)
+        else:
+            flag = False
+    text = '\n'.join(lines)
+    # ввод тєгов
+    hashtag = input('Please input the hashtag of your note: \n')
+    # добавление заметки в NotesBook
+    notes_book.add_note(text, hashtag.upper())
+    return "Your note is successfully saved"
+
+
+@error_handler
+def delete_note():
+    print("Please input a hashtag of note that you would like to delete:")
+    hashtag = input().upper()
+    notes_book.delete_note(hashtag)
+    return f"The note with hashtag '{hashtag}' is deleted"
+
+
+@error_handler
+def edit_note():
+    print("Please input a hashtag of note that you would like to edit:")
+    hashtag = input().upper()
+    notes_book.edit_note(hashtag)
+    return "The note is edited"
+
+
+@error_handler
+def find_note():
+    print('Please input keyword for search:')
+    keyword = input().upper()
+    print('THE RESULTS OF SEARCH:')
+    print(notes_book.find_note(keyword))
+    return "The search is sucessfully finished"
+
+
+@error_handler
+def sort_notes():
+    print("What type of sort would you like? Please input:")
+    print("1 - to sort from A to Z")
+    print("2 - to sort from Z to A")
+    print("3 - to sort from old notes to new notes")
+    print("4 - to sort from new notes to old notes")
+    search_type = input()
+    print('The sorted Notes are:')
+    print(notes_book.sort_notes(search_type))
+    return('The end of sorted Notes')
+
+
+@error_handler
+def show_notes():
+    print('Your Notes Book:')
+    print(notes_book)
+    return "The end of Notes Book"
+
+# Конец конец команд для NotesBook
+
 
 def help_func():
     print(40*'*')
@@ -215,12 +286,13 @@ def input_error():
     return 'Wrong input! Type "help" for commands or "exit" to exit'
 
 
+ANSWEARS = {'add': add, 'change': change, 'close': exit, 'exit': exit,
+            'find': find, 'help': help_func, 'save': save, 'show': show,
+            'add note': add_note, 'delete note': delete_note, 'edit note': edit_note,
+            'find note': find_note, 'sort notes': sort_notes, 'show notes': show_notes}
+
 if __name__ == '__main__':
     main()
 
 # ANSWEARS = {'add': add, 'change': change, 'close': exit, 'exit': exit,
 #             'find': find, 'help': help_func, 'save': save, 'show': show}
-ANSWEARS = {'add': add, 'change': change, 'close': exit, 'exit': exit,
-            'find': find, 'help': help_func, 'save': save, 'show': show,
-            'add note': add_note, 'delete note': delete_note, 'edit note': edit_note,
-            'find note': find_note, 'sort notes': sort_notes, 'show motes': show_notes}
