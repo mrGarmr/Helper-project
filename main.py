@@ -196,6 +196,21 @@ def show():
         # counter+=1
         print(79*'_')
 
+
+@error_handler
+def show1():
+    number = int(input('Please input the number or record on 1 page: '))
+    print("The contacts book is following:")
+    # Печать шапки с названием столбцов
+    print(79*'_')
+    print('|                  Name                   |       Phones         |  Birthday  |')
+    print(79*'_')
+    iter = book.iterator1(number)
+    for i in iter:
+        print(i)
+        print(
+            '------------------------------The end of the page-----------------------------\n')
+    return "The end of the contacts book"
 ##############################################################
 # Команды для Handler для работы с NotesBook
 
@@ -287,7 +302,7 @@ def input_error():
 
 
 ANSWEARS = {'add': add, 'change': change, 'close': exit, 'exit': exit,
-            'find': find, 'help': help_func, 'save': save, 'show': show,
+            'find': find, 'help': help_func, 'save': save, 'show': show1,
             'add note': add_note, 'delete note': delete_note, 'edit note': edit_note,
             'find note': find_note, 'sort notes': sort_notes, 'show notes': show_notes}
 
