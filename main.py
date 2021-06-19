@@ -149,6 +149,7 @@ def add():
             if len(tags)>1 and len(tags)<10:
                 record1.user['Tags'] = tags
                 book.add_record(record1.user)
+                save()
                 say = 'Successfully changed'
                 return say  
 
@@ -159,6 +160,7 @@ def add():
 
         elif decicion == 'n' or decicion == 'not':
             book.add_record(record1.user)
+            save()
             say = 'Successfully changed'
             return say
 
@@ -228,23 +230,27 @@ def birthday():
     n=int(input())
     result=[]
     for i in book:
-        if days_to_birthday(i["Birthday"])<=n:
-            result.append(i)
+        if i["Birthday"]!=0 and i["Birthday"]!=None:
+            if days_to_birthday(i["Birthday"]) <=n:
+                print("HERE")
+                result.append(i)
+
     print(f'In future {n} days you need to congratulate {len(result)} people from your Addressbook')        
     show_find(result)
-    return 
+    
 
 def days_to_birthday(bday):
-       
     today_d = datetime.now().date()
     bday = datetime.strptime(bday, "%d.%m.%Y").date()
     bday = date(today_d.year, bday.month, bday.day)
+    
     if today_d > bday:
         bday = date(today_d.year+1, bday.month, bday.day)
         days_left = (bday-today_d)
     else:
         days_left = (bday-today_d)
-    return days_left.days    
+    
+    return days_left.days
 
 @error_handler
 def delete():
