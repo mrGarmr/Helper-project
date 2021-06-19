@@ -83,20 +83,7 @@ class Id(Field):
 
 class Email(Field):
     def __init__(self, email):
-        self.email = None
-        self.__email=email
-
-    @property
-    def value(self):
-        return self.__email
-
-    # @ email.setter
-    # def value(self, value):
-    # if re.match('([a-zA-Z][a-zA-Z0-9\._!#$%^*=\-]{1,}@[a-zA-Z]+\.[a-zA-Z]{2,})', value):
-    #         self.__email = value
-    # else:
-    #     print('Format is wrong. Try again')
-#end OF CHANGING
+        self.email=email
 
 class Birthday(Field):
     def __init__(self, value):

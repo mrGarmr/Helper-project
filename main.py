@@ -30,18 +30,16 @@ def main():
                     notes_book = pickle.load(fh)
                     break
             except:
-                print('Please write wright path to file! This file is empty!')
+                print('Please write right path to file! This file is empty!')
 
         elif command == 'new':
-            print(
-                r'Please write the full path where to create file. Example: "d:\test\book.txt":')
+            print(r'Please write the full path where to create file. Example: "d:\test\book.txt":')
             path = str(input())
             book = AddressBook()
             notes_book = NotesBook()
             break
 
         elif command == 'exit' or command == 'esc' or command == 'close':
-            esc = False
             esc_e = False
             break
         else:
@@ -64,15 +62,13 @@ def add():
     global esc_e, book
     print('Input Name:')
     name = Name(str(input()))
-    
-    print(len(book))
+   
     if len(book)>0:
-        id_n=len(book)+1
+        id_n=book[-1]["Id"]+1
     else:
         id_n=1    
     record1 = Record(name,id_n)
 
-    esc = True
     while True:
         print('Do you want to add phone-number? "y" (YES) or n (NO). Type "exit" to exit')
         decicion = str(input())
@@ -86,7 +82,7 @@ def add():
             break
         elif decicion == 'n' or decicion == 'not':
             break
-    while esc:
+    while True:
         print('Do you want to add Birthday? "y" (YES) or n (NO). Type "exit" to exit')
         decicion = str(input())
         decicion = decicion.lower()
@@ -103,7 +99,7 @@ def add():
         elif decicion == 'n' or decicion == 'not':
             break
 
-    while esc:
+    while True:
         print('Do you want to add Address? "y" (YES) or n (NO). Type "exit" to exit')
         decicion = str(input())
         decicion = decicion.lower()
@@ -121,7 +117,7 @@ def add():
         elif decicion == 'n' or decicion == 'not':
             break
 #START HERE
-    while esc:
+    while True:
         print('Do you want to add E-mail? "y" (YES) or n (NO). Type "exit" to exit')
         decicion = str(input())
         decicion = decicion.lower()
@@ -143,7 +139,7 @@ def add():
         elif decicion == 'n' or decicion == 'not':
             break
 
-    while esc:
+    while True:
         print('Do you want to add Tags? "y" (YES) or n (NO). Type "exit" to exit')
         decicion = str(input())
         decicion = decicion.lower()
@@ -179,10 +175,17 @@ def change():
         old_name = old_name.lower()
         print('Type new name')
         new_name = str(input())
-        for i in book:
-            if i['Name'].lower() == old_name:
-                i['Name'] = new_name
-                say = 'Successfully changed'
+        result = book.find_value(old_name)
+        if len(result)>1:
+            print(f"I've found {len(result)} notes with this Name")
+            show_find(result)
+            print('Please enter Id to change the right name')
+            find_v = result[0]["Name"]
+            del_input=int(input())
+            for i in book:
+                if i["Name"]==find_v and i["Id"]==del_input:
+                    i['Name'] = new_name
+                    say = 'Successfully changed'
                 return say
             else:
                 print(f'{old_name} not in Adress Book')
@@ -221,16 +224,15 @@ def change():
 #START CHaNGE
 @error_handler
 def birthday():
-    print('BIIRTHDAY')
-    show_find(show_birthday_people())
-
-def show_birthday_people():
+    print("Please write how many days in advance to warn you about people's birthday")
+    n=int(input())
     result=[]
     for i in book:
-        if days_to_birthday(i["Birthday"])<=7:
+        if days_to_birthday(i["Birthday"])<=n:
             result.append(i)
-    print(f'In future 7 days you need to congratulate {len(result)} people from your Addressbook')        
-    return result
+    print(f'In future {n} days you need to congratulate {len(result)} people from your Addressbook')        
+    show_find(result)
+    return 
 
 def days_to_birthday(bday):
        
@@ -253,7 +255,7 @@ def delete():
     if len(result)>1:
         print(f"I've found {len(result)} notes with this Name")
         show_find(result)
-        print('Please enter Id to delete the wright note')
+        print('Please enter Id to delete the right note')
         find_v = result[0]["Name"]
         del_input=int(input())
         for i in book:
