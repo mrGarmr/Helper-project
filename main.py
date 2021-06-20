@@ -1,6 +1,9 @@
-from ClassBook import *
-from notes_book import NotesBook
+import pathlib
 
+from ClassBook import *
+from clean import *
+
+from notes_book import NotesBook
 
 def error_handler(func):
     def inner(*args):
@@ -13,8 +16,7 @@ def error_handler(func):
             return result
     return inner
 
-
-#@error_handler
+@error_handler
 def main():
     global path, book, notes_book, esc_e
     esc_e = True
@@ -46,16 +48,15 @@ def main():
             print('Wrong command.')
 
     while esc_e:
-        user_input = input(
+        user_inpu = input(
             'What do you want to do? Type "help" for additional commands.\n')
-        result = handler(user_input)
+        result = handler(user_inpu)
         if result:
             print(result)
         elif result == None:
             pass
         else:
             break
-
 
 @error_handler
 def add():
@@ -224,6 +225,21 @@ def change():
         esc_e = False
         return esc_e
 #START CHaNGE
+@error_handler
+def clean_folder():
+    #global user_input
+    print(100*"_")
+    print('Welcome to clean folder instrument!')
+    print(100*"_")
+    print('Please enter path to clean and structurise.')
+    user_input=str(input())
+       
+    path=pathlib.Path(user_input)
+    print_recursive(path,user_input)
+    delete_dir(user_input)
+    #D:\Tresh
+    return 'Everything done'
+
 @error_handler
 def birthday():
     print("Please write how many days in advance to warn you about people's birthday")
@@ -407,18 +423,23 @@ def show_notes():
 
 
 def help_func():
-    print(40*'*')
+    print(80*'*')
+    print(20*'*'+'WORKING WITH ADDRESSBOOK:'+20*'*')
     print('*Type "add"    to add new contact.\n*Type "birthday" to see people that have birthday nearest days.\n*Type "change" to change contact\'s phone, name or birthday.\n*Type "find"   to see information that you are looking for.\n*Type "delete" to delete information that you don\'t need.\n*Type "show"   to show you all phonebook.\n*Type "save"   to save and exit.\n*Type "exit"   to exit')
-
-    return (40*'*')
+    print(20*'*'+'WORKING WITH NOTESBOOK:'+20*'*')
+    print('*Type "add note"    to add new note.\n*Type "delete note"    to delete note.\n*Type "edit note"    to edit note.\n*Type "find note"    to look through notes.\n*Type "sort notes"    to sort notes.\n*Type "show notes"    to show your notes.\n')
+    print(20*'*'+'WORKING WITH CLEANFOLDER:'+20*'*')
+    print('*Type "clean"    to clean and structurise folder.\n') 
+    return (80*'*')
 
 
 @error_handler
-def handler(user_input):
-    if user_input in ANSWEARS.keys():
-        return ANSWEARS[user_input]()
+def handler(user_inpu):
+    if user_inpu in ANSWEARS.keys():
+        return ANSWEARS[user_inpu]()
     else:
         return input_error()
+
 
 
 def input_error():
@@ -427,10 +448,9 @@ def input_error():
 
 ANSWEARS = {'add': add, 'change': change, 'close': exit, 'exit': exit,
             'find': find, 'help': help_func, 'save': save, 'show': show1,
-            'delete':delete,'birthday':birthday,
+            'delete':delete,'birthday':birthday, 'clean': clean_folder,
             'add note': add_note, 'delete note': delete_note, 'edit note': edit_note,
             'find note': find_note, 'sort notes': sort_notes, 'show notes': show_notes}
 
 if __name__ == '__main__':
-    main()
-
+    main()       
