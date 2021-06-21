@@ -54,11 +54,11 @@ class AddressBook(UserList):
             #  взято с Володи кода
             # Именно 'этот кусочек надо редактировать чтобы добавить адрес и email
             
-            result += f'|{i["Id"]:<5}| {i["Name"]:<25}| { i["Phones"][0] if len(i["Phones"])>=1 else " ":<15} | {i["Birthday"]if i["Birthday"] else " ":<11}|{i["Address"]if i["Address"] else " ":<30}|  {i["E-mail"]if i["E-mail"] else " ":<25}| {i["Tags"] if i["Tags"] else " ":<11}|\n'
+            result += f'|{i["Id"]:<5}| {i["Name"]:<25}| { i["Phones"][0] if len(i["Phones"])>=1 else " ":<15} | {i["Birthday"]if i["Birthday"] else " ":<11}|{i["Address"]if i["Address"] else " ":<30}|  {i["E-mail"]if i["E-mail"] else " ":<30}| {i["Tags"] if i["Tags"] else " ":<15}|\n'
             if len(i["Phones"]) > 1:
                 for elem in i["Phones"][1:]:
-                    result += f'|     |                          | {elem: <15} |            |                              |                           |            | \n'
-            result += f"{137*'_'}\n"
+                    result += f'|     |                          | {elem: <15} |            |                              |                                |                | \n'
+            result += f"{145*'_'}\n"
             # конец записи строки с описанием 1 контакта
             counter += 1
             if counter == n:

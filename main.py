@@ -1,4 +1,3 @@
-
 import pathlib
 
 from ClassBook import *
@@ -50,6 +49,7 @@ def main():
 
     while esc_e:
         user_inpu = input('What do you want to do? Type exact command you want to do, "exit" to exit or "help" for list of commands.\n')
+        user_inpu=user_inpu.lower()
         result = handler(user_inpu)
         if result:
             print(result)
@@ -74,9 +74,9 @@ def add():
 
     while True:
         print('Do you want to add phone-number? "y" (YES) or n (NO). Type "exit" to exit')
-        decicion = str(input())
-        decicion = decicion.lower()
-        if decicion == 'y' or decicion == 'yes':
+        decision = str(input())
+        decision = decision.lower()
+        if decision == 'y' or decision == 'yes' or decision == 'нуі' or decision == 'н' or decision == 'да' or decision == 'д':
             print('Input Phone Number. Example: +380501234567')
             phone = str(input())
             if re.fullmatch('[+]?[0-9]{3,12}', phone):
@@ -84,29 +84,29 @@ def add():
             else:
                 print('Wrong input! Phone must start with + and have 12 digits. Example +380501234567')
             
-        elif decicion == 'exit' or decicion == 'esc' or decicion == 'close' or decicion =='учше':
+        elif decision == 'exit' or decision == 'esc' or decision == 'close' or decision =='учше':
             esc_e = False
             return 'Closed'
-        elif decicion == 'n' or decicion == 'not':
+        elif decision == 'n' or decision == 'not' or decision == 'no' or decision == 'нет'or decision == 'тщ' or decision == 'тще' or decision == 'т':
             break
         else:
             print('Wrong input!')
 
     while True:
         print('Do you want to add Birthday? "y" (YES) or n (NO). Type "exit" to exit')
-        decicion = str(input())
-        decicion = decicion.lower()
-        if decicion == 'y' or decicion == 'yes':
+        decision = str(input())
+        decision = decision.lower()
+        if decision == 'y' or decision == 'yes' or decision == 'нуі' or decision == 'н' or decision == 'да' or decision == 'д':
             print('Input Birthday. Expected day.month.year(Example:25.12.1970)')
             birthday = str(input())
             record1.user['Birthday'] = birthday
             break
-        elif decicion == 'exit' or decicion == 'esc' or decicion == 'close' or decicion =='учше':
+        elif decision == 'exit' or decision == 'esc' or decision == 'close' or decision =='учше':
             book.add_record(record1.user)
             esc_e = False
             return 'Closed'
 
-        elif decicion == 'n' or decicion == 'not':
+        elif decision == 'n' or decision == 'not' or decision == 'no' or decision == 'нет'or decision == 'тщ' or decision == 'тще' or decision == 'т':
             break
         
         else:
@@ -114,22 +114,22 @@ def add():
 
     while True:
         print('Do you want to add Address? "y" (YES) or n (NO). Type "exit" to exit')
-        decicion = str(input())
-        decicion = decicion.lower()
-        if decicion == 'y' or decicion == 'yes':
+        decision = str(input())
+        decision = decision.lower()
+        if decision == 'y' or decision == 'yes' or decision == 'нуі' or decision == 'н' or decision == 'да' or decision == 'д':
             print('Input Address. Please no more than 30 symbols')
             address = str(input())
-            if len(address)>1 and len(address)<30:
+            if len(address)>1 and len(address)<=30:
                 record1.user['Address'] = address
                 break
             else:
                 print(f'You Address is {len(address)} symbols. Please no more than 30 symbols')  
-        elif decicion == 'exit' or decicion == 'esc' or decicion == 'close' or decicion =='учше':
+        elif decision == 'exit' or decision == 'esc' or decision == 'close' or decision =='учше':
             book.add_record(record1.user)
             esc_e = False
             return 'Closed'
 
-        elif decicion == 'n' or decicion == 'not':
+        elif decision == 'n' or decision == 'not' or decision == 'no' or decision == 'нет'or decision == 'тщ' or decision == 'тще' or decision == 'т':
             break
         else:
             print('Wrong input!')
@@ -137,26 +137,26 @@ def add():
 #START HERE
     while True:
         print('Do you want to add E-mail? "y" (YES) or n (NO). Type "exit" to exit')
-        decicion = str(input())
-        decicion = decicion.lower()
-        if decicion == 'y' or decicion == 'yes':
-            print('Input E-mail. Please no more than 25 symbols')
+        decision = str(input())
+        decision = decision.lower()
+        if decision == 'y' or decision == 'yes' or decision == 'нуі' or decision == 'н' or decision == 'да' or decision == 'д':
+            print('Input E-mail. Please no more than 30 symbols')
             email = str(input())
             if re.match('([a-zA-Z][a-zA-Z0-9\._!#$%^*=\-]{1,}@[a-zA-Z]+\.[a-zA-Z]{2,})', email):
-                if len(email)>1 and len(email)<25:
+                if len(email)>1 and len(email)<=30:
                     record1.user['E-mail'] = email
                     break 
                 else:
-                    print(f'You E-mail is {len(email)} symbols. Please no more than 25 symbols') 
+                    print(f'You E-mail is {len(email)} symbols. Please no more than 30 symbols') 
             else:
                 print('Format is wrong. Try again')
              
-        elif decicion == 'exit' or decicion == 'esc' or decicion == 'close' or decicion =='учше':
+        elif decision == 'exit' or decision == 'esc' or decision == 'close' or decision =='учше':
             book.add_record(record1.user)
             esc_e = False
             return 'Closed'
 
-        elif decicion == 'n' or decicion == 'not':
+        elif decision == 'n' or decision == 'not' or decision == 'no' or decision == 'нет'or decision == 'тщ' or decision == 'тще' or decision == 'т':
             break
         
         else:
@@ -164,26 +164,26 @@ def add():
 
     while True:
         print('Do you want to add Tags? "y" (YES) or n (NO). Type "exit" to exit')
-        decicion = str(input())
-        decicion = decicion.lower()
-        if decicion == 'y' or decicion == 'yes':
-            print('Input Tags. Please no more than 10 symbols')
+        decision = str(input())
+        decision = decision.lower()
+        if decision == 'y' or decision == 'yes' or decision == 'нуі' or decision == 'н' or decision == 'да' or decision == 'д':
+            print('Input Tags. Please no more than 15 symbols')
             tags = str(input())
-            if len(tags)>1 and len(tags)<10:
+            if len(tags)>1 and len(tags)<=15:
                 record1.user['Tags'] = tags
                 book.add_record(record1.user)
                 save()
                 say = 'Successfully changed'
                 return say  
             else:
-                    print(f'You Tags is {len(tags)} symbols. Please no more than 10 symbols')
+                    print(f'You Tags is {len(tags)} symbols. Please no more than 15 symbols')
 
-        elif decicion == 'exit' or decicion == 'esc' or decicion == 'close' or decicion =='учше':
+        elif decision == 'exit' or decision == 'esc' or decision == 'close' or decision =='учше':
             book.add_record(record1.user)
             esc_e = False
             return 'Closed'
 
-        elif decicion == 'n' or decicion == 'not':
+        elif decision == 'n' or decision == 'not' or decision == 'no' or decision == 'нет'or decision == 'тщ' or decision == 'тще' or decision == 'т':
             book.add_record(record1.user)
             save()
             return say
@@ -205,11 +205,11 @@ def change():
 
     print('To change Name: type "name".\nTo change Phone: type "phone".\nTo change Birthday: type "birthday".\nTo change Address: type "address".\n')
     print('To change E-mail: type "email".\nTo change Tags: type "tags".')
-    decicion = str(input())
-    decicion = decicion.lower()
+    decision = str(input())
+    decision = decision.lower()
     
     
-    if decicion == 'name':
+    if decision == 'name' or decision == 'тфьу':
         print('Type new name')
         new_name = str(input())
         say = 'Successfully changed'
@@ -233,7 +233,7 @@ def change():
         else:
             print(f'{old_name} not in Adress Book')
 
-    elif decicion == 'phone':
+    elif decision == 'phone' or decision == 'зрщту':
         print('Type phone you want to change.If there are no phones - just press "enter".')
         old_name = str(input())
         print('Type new phone')
@@ -258,7 +258,7 @@ def change():
                 return say                   
                 
 
-    elif decicion == 'birthday':
+    elif decision == 'birthday' or decision == 'ишкервфн':
         print('Type birthday you want to change. Expected day.month.year(Example:25.12.1970). If there is no birthday - just press "enter".')
         old_name = str(input())
         print('Type new birthday. Expected day.month.year(Example:25.12.1970)')
@@ -275,7 +275,7 @@ def change():
             else:
                 print(f'{old_name} not in Adress Book')
 
-    elif decicion == 'address':
+    elif decision == 'address' or decision == 'adress' or decision == 'adres' or decision == 'фввкуіі' or decision == 'фвкуі':
         print('Type address you want to change. If there is no address - just press "enter".')
         old_name = str(input())
         print('Type new address.')
@@ -292,7 +292,7 @@ def change():
             else:
                 print(f'{old_name} not in Adress Book')
 
-    elif decicion == 'email' or decicion == 'e-mail':
+    elif decision == 'email' or decision == 'e-mail' or decision == 'уьфшд':
         print('Type E-mail you want to change.)')
         old_name = str(input())
         print('Type new E-mail.')
@@ -309,7 +309,7 @@ def change():
             else:
                 print(f'{old_name} not in Adress Book')
 
-    elif decicion == 'tags'or decicion == 'tag':
+    elif decision == 'tags'or decision == 'tag'or decision == 'ефп':
         print('Type Tags you want to change. If there are no Tags - just press "enter"')
         old_name = str(input())
         print('Type new Tags.')
@@ -326,7 +326,7 @@ def change():
             else:
                 print(f'{old_name} not in Adress Book')
 
-    elif decicion == 'exit' or decicion == 'esc' or decicion == 'close' or decicion =='учше':
+    elif decision == 'exit' or decision == 'esc' or decision == 'close' or decision =='учше':
         esc_e = False
         return esc_e
 #START CHaNGE
@@ -343,20 +343,21 @@ def clean_folder():
     print_recursive(path,user_input)
     delete_dir(user_input)
     #D:\Tresh
-    return 'Everything done'
+    return 'Everything done! Please check yor folder!'
 
 @error_handler
 def birthday():
-    print("If you want to find, who'll have birthday in exact date PRESS 1./nIf you need to know who'll have birthday in period of time PRESS 2./n")
-    decision=input()
+    print("If you want to find, who'll have birthday in exact date TYPE 1.\nIf you need to know who'll have birthday in period of time TYPE 2.")
+    decision=int(input())
     if decision==1:
         print("Please write how many days in advance to warn you about people's birthday")
         n=int(input())
         result=[]
         for i in book:
             if i["Birthday"]!=0 and i["Birthday"]!=None:
-                if days_to_birthday(i["Birthday"]) =n:
+                if days_to_birthday(i["Birthday"])==n:
                     result.append(i)
+
     elif decision==2:
         print("Please write how many days in advance to warn you about people's birthday")
         n=int(input())
@@ -429,16 +430,16 @@ def show_find(v_list):
     
     print("I've found following:")
     # Печать шапки с названием столбцов
-    print(136*'_')
-    print('| ID  |           Name           |     Phones      |  Birthday  |           Address            |           E-mail          |    Tags    |')
-    print(136*'-')
+    print(145*'_')
+    print('| ID  |           Name           |     Phones      |  Birthday  |           Address            |              E-mail            |       Tags     |')
+    print(145*'-')
     
     for i in v_list:
-        print(f'|{i["Id"]:<5}| {i["Name"]:<25}| { i["Phones"][0] if len(i["Phones"])>=1 else " ":<15} | {i["Birthday"]if i["Birthday"] else " ":<11}|{i["Address"]if i["Address"] else " ":<30}|  {i["E-mail"]if i["E-mail"] else " ":<25}| {i["Tags"] if i["Tags"] else " ":<11}|')
+        print(f'|{i["Id"]:<5}| {i["Name"]:<25}| { i["Phones"][0] if len(i["Phones"])>=1 else " ":<15} | {i["Birthday"]if i["Birthday"] else " ":<11}|{i["Address"]if i["Address"] else " ":<30}|  {i["E-mail"]if i["E-mail"] else " ":<30}| {i["Tags"] if i["Tags"] else " ":<15}|')
         if len(i["Phones"]) > 1:
             for elem in i["Phones"][1:]:
-                print(f'|     |                          | {elem: <15} |            |                              |                           |            |')
-        print(f"{136*'_'}")
+                print(f'|     |                          | {elem: <15} |            |                              |                                |                |')
+        print(f"{145*'_'}")
        
 def exit():
     global esc_e
@@ -459,9 +460,9 @@ def show1():
     number = input('Please input the number or record on 1 page: ')
     print("The contacts book is following:")
         # Печать шапки с названием столбцов
-    print(137*'_')
-    print('| ID  |           Name           |     Phones      |  Birthday  |           Address            |           E-mail          |    Tags    |')
-    print(137*'-')
+    print(145*'_')
+    print('| ID  |           Name           |     Phones      |  Birthday  |           Address            |              E-mail            |      Tags      |')
+    print(145*'-')
     if number!=0 or number!=None:
         iter = book.iterator1(number)
         for i in iter:
@@ -560,6 +561,60 @@ def help_func():
 def handler(user_inpu):
     if user_inpu in ANSWEARS.keys():
         return ANSWEARS[user_inpu]()
+    elif user_inpu in ADD:
+        print('Maybe you mean "add" command?\nIf YES type "yes" or "y"\nIf NO type "no" or "n"')
+        decision=str(input())
+        decision = decision.lower()
+        if decision == 'y' or decision == 'yes' or decision == 'нуі' or decision == 'н' or decision == 'да' or decision == 'д':
+            return add()
+    elif user_inpu in CHANGE:
+        print('Maybe you mean "change" command?\nIf YES type "yes" or "y"\nIf NO type "no" or "n"')
+        decision=str(input())
+        decision = decision.lower()
+        if decision == 'y' or decision == 'yes' or decision == 'нуі' or decision == 'н' or decision == 'да' or decision == 'д':
+            return change()
+
+    elif user_inpu in FIND:
+        print('Maybe you mean "find" command?\nIf YES type "yes" or "y"\nIf NO type "no" or "n"')
+        decision=str(input())
+        decision = decision.lower()
+        if decision == 'y' or decision == 'yes' or decision == 'нуі' or decision == 'н' or decision == 'да' or decision == 'д':
+            return find()
+    
+    elif user_inpu in HELP:
+        print('Maybe you mean "help" command?\nIf YES type "yes" or "y"\nIf NO type "no" or "n"')
+        decision=str(input())
+        decision = decision.lower()
+        if decision == 'y' or decision == 'yes' or decision == 'нуі' or decision == 'н' or decision == 'да' or decision == 'д':
+            return help()
+
+    elif user_inpu in DELETE:
+        print('Maybe you mean "delete" command?\nIf YES type "yes" or "y"\nIf NO type "no" or "n"')
+        decision=str(input())
+        decision = decision.lower()
+        if decision == 'y' or decision == 'yes' or decision == 'нуі' or decision == 'н' or decision == 'да' or decision == 'д':
+            return delete()
+    
+    elif user_inpu in BIRTHDAY:
+        print('Maybe you mean "birthday" command?\nIf YES type "yes" or "y"\nIf NO type "no" or "n"')
+        decision=str(input())
+        decision = decision.lower()
+        if decision == 'y' or decision == 'yes' or decision == 'нуі' or decision == 'н' or decision == 'да' or decision == 'д':
+            return birthday()
+    
+    elif user_inpu in CLEAN:
+        print('Maybe you mean "clean" command?\nIf YES type "yes" or "y"\nIf NO type "no" or "n"')
+        decision=str(input())
+        decision = decision.lower()
+        if decision == 'y' or decision == 'yes' or decision == 'нуі' or decision == 'н' or decision == 'да' or decision == 'д':
+            return clean_folder()
+
+    elif user_inpu in SHOW:
+        print('Maybe you mean "show" command?\nIf YES type "yes" or "y"\nIf NO type "no" or "n"')
+        decision=str(input())
+        decision = decision.lower()
+        if decision == 'y' or decision == 'yes' or decision == 'нуі' or decision == 'н' or decision == 'да' or decision == 'д':
+            return show1()
     else:
         return input_error()
 
@@ -569,11 +624,20 @@ def input_error():
     return 'Wrong input! Type exact command you want to do,"exit" to exit or "help" for list of commands.'
 
 
-ANSWEARS = {'add': add, 'change': change, 'close': exit, 'exit': exit,
-            'find': find, 'help': help_func, 'save': save, 'show': show1,
-            'delete':delete,'birthday':birthday, 'clean': clean_folder,
-            'add note': add_note, 'delete note': delete_note, 'edit note': edit_note,
-            'find note': find_note, 'sort notes': sort_notes, 'show notes': show_notes}
+ANSWEARS = {'add': add, 'ad': add, '+': add, 'фвв': add,'change': change, 'срфтпу': change, 'close': exit, 'exit': exit,'учше': exit,
+            'find': find, 'аштв': find, 'help': help_func, 'рудз': help_func, 'хелп': help_func, 'save': save, 'іфму': save, 'ыфму': save, 'show': show1, 'ырщц': show1, 'ірщц': show1,
+            'delete':delete, 'del':delete, 'вуд':delete, 'вудуеу':delete,'birthday':birthday, 'ишкервфн':birthday, 'clean': clean_folder, 'сдуфт': clean_folder,
+            'add note': add_note, 'фвв тщеу': add_note, 'delete note': delete_note, 'вудуеу тщеу': delete_note, 'edit note': edit_note, 'увше тщеу': edit_note,
+            'find note': find_note, 'аштв тщеу': find_note, 'sort notes': sort_notes, 'ыщке тщеуы': sort_notes, 'show notes': show_notes, 'ырщц тщеуы': show_notes }
+
+ADD=['a','ad','addd','asd','asdd','sdd','adf', 'фів', 'івв', 'фівв', 'фввв', 'фва', 'вв', 'ыва', 'фвы', 'фыв', 'явв', 'фв']
+CHANGE=['chane', 'chnge', 'cange', 'chenge', 'hange', 'chng', 'cchenge', 'chhenge', 'cheenge', 'chaange', 'сменить', 'chang', 'срутпу', 'срутп', 'менять', 'изменить', 'срфтп', 'рсфтпу', 'срутпу']
+FIND=['fnd', 'ind', 'fid', 'fin', 'faind', 'fand', 'ffind', 'fiind', 'finnd', 'findd', 'seek', 'look', 'look for', 'атв', 'афтв', 'штв', 'афт', 'поиск', 'искать', 'найти', 'шштв']
+HELP=['&', '?', 'hlp', 'what', 'why', 'where', 'how', 'elp', 'hep', 'hel', 'healp', 'halp', 'hhelp', 'heelp', 'hellp', 'helpp', 'рфдз', 'рдз', 'руз', 'руд', 'помощь']
+DELETE=['вуд', '-', 'del', 'вудуеу', 'вуфдуеу', 'dealete', 'elete', 'elet', 'delet', 'dlte', 'dlt', 'lete', 'dealete', 'вудуе', 'удалить', 'clear', 'pop']
+BIRTHDAY=['lf', 'birsday', 'bersday', 'bezday', 'bethday', 'birzday', 'bearsday', 'birthdey', 'beersday', 'brthday', 'иууксвфн', 'ишквфн', 'др', 'рождение', 'бездей', 'бирсдей', 'днюха', 'birthday people', 'birthday boy', 'birthday girl']
+CLEAN=['cleen', 'clan', 'clin', 'cleane', 'cleene', 'klin', 'klean', 'lean', 'clen', 'kleen', 'суф', 'лдуут', 'лдуфт', 'сдуфту', 'клн', 'клин', 'разобрать', 'мусор']
+SHOW=['ырща', 'ырщцу', 'showe', 'schow', 'schove', 'chov', 'shove', 'schov', 'schowe', 'how', 'sho', 'shouv', 'шов', 'ірщцу', 'показать', 'рщц', 'ірщм']
 
 
 if __name__ == '__main__':
