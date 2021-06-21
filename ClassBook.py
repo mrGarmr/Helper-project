@@ -34,14 +34,16 @@ class AddressBook(UserList):
                 if (isinstance(value, str)):
                     value = value.lower()
                     if value.find(f_value) != -1:
-                        result.append(i)
+                        if i not in result:
+                            result.append(i)
+                            break
                 elif value != None:
                     if (isinstance(value, list)):
                         for j in value:
                             j = j.lower()
                             if j.find(f_value) != -1:
                                 result.append(i)
-
+                                break
         return result
 
     def iterator1(self, n):
@@ -132,7 +134,7 @@ class Record:
     def add_phone(self, phone):
         phone = str(phone)
         try:
-            num = re.fullmatch('[+]?[0-9]{12}', phone)
+            num = re.fullmatch('[+]?[0-9]{3,12}', phone)
             if num:
                 self.phones.append(phone)
         except:
@@ -168,11 +170,11 @@ class Phone(Field):
     @ phone.setter
     def phone(self, value):
         self.__phone = ''
-        if re.fullmatch('[+]?[0-9]{12}', value):
+        if re.fullmatch('[+]?[0-9]{3,12}', value):
             self.__phone = value
         else:
             print(
-                'Phone must start with + and have 12 digits. Example +380501234567 SETT')
+                'Phone must start with + and have 12 digits. Example +380501234567')
 
     # def __str__(self):
         # return self.phone

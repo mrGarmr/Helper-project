@@ -1,7 +1,5 @@
-#!/usr/bin/env python
+
 import pathlib
-import signal
-import sys
 
 from ClassBook import *
 from clean import *
@@ -26,7 +24,7 @@ def main():
     while True:
         print('What do you want to do?\nYou can use commands: "load" to load Adress Book and "new" to create new Book or "exit"/"close" to close application:')
         command = str(input())
-        if command == "load":
+        if command == "load" or command == "дщфв":
             print(r'Please write the full path to file. Example: "d:\test\book.txt":')
             path = str(input())
             try:
@@ -37,22 +35,21 @@ def main():
             except:
                 print('Please write right path to file! This file is empty!')
 
-        elif command == 'new':
+        elif command == 'new' or command == "туц":
             print(r'Please write the full path where to create file. Example: "d:\test\book.txt":')
             path = str(input())
             book = AddressBook()
             notes_book = NotesBook()
             break
 
-        elif command == 'exit' or command == 'esc' or command == 'close':
+        elif command == 'exit' or command == 'esc' or command == 'close' or command =='учше':
             esc_e = False
             break
         else:
             print('Wrong command.')
 
     while esc_e:
-        user_inpu = input(
-            'What do you want to do? Type "help" for additional commands.\n')
+        user_inpu = input('What do you want to do? Type exact command you want to do, "exit" to exit or "help" for list of commands.\n')
         result = handler(user_inpu)
         if result:
             print(result)
@@ -66,7 +63,9 @@ def add():
     global esc_e, book
     print('Input Name:')
     name = Name(str(input()))
-   
+    if name == 'exit' or name == 'esc' or name == 'close' or name =='учше':
+            esc_e = False
+            return "Not saved"
     if len(book)>0:
         id_n=book[-1]["Id"]+1
     else:
@@ -80,12 +79,19 @@ def add():
         if decicion == 'y' or decicion == 'yes':
             print('Input Phone Number. Example: +380501234567')
             phone = str(input())
-            record1.add_phone(phone)
-        elif decicion == 'exit' or decicion == 'esc' or decicion == 'close':
+            if re.fullmatch('[+]?[0-9]{3,12}', phone):
+                record1.add_phone(phone)
+            else:
+                print('Wrong input! Phone must start with + and have 12 digits. Example +380501234567')
+            
+        elif decicion == 'exit' or decicion == 'esc' or decicion == 'close' or decicion =='учше':
             esc_e = False
-            break
+            return 'Closed'
         elif decicion == 'n' or decicion == 'not':
             break
+        else:
+            print('Wrong input!')
+
     while True:
         print('Do you want to add Birthday? "y" (YES) or n (NO). Type "exit" to exit')
         decicion = str(input())
@@ -95,13 +101,16 @@ def add():
             birthday = str(input())
             record1.user['Birthday'] = birthday
             break
-        elif decicion == 'exit' or decicion == 'esc' or decicion == 'close':
+        elif decicion == 'exit' or decicion == 'esc' or decicion == 'close' or decicion =='учше':
             book.add_record(record1.user)
             esc_e = False
-            return 'close'
+            return 'Closed'
 
         elif decicion == 'n' or decicion == 'not':
             break
+        
+        else:
+            print('Wrong input!')
 
     while True:
         print('Do you want to add Address? "y" (YES) or n (NO). Type "exit" to exit')
@@ -112,14 +121,19 @@ def add():
             address = str(input())
             if len(address)>1 and len(address)<30:
                 record1.user['Address'] = address
-                break    
-        elif decicion == 'exit' or decicion == 'esc' or decicion == 'close':
+                break
+            else:
+                print(f'You Address is {len(address)} symbols. Please no more than 30 symbols')  
+        elif decicion == 'exit' or decicion == 'esc' or decicion == 'close' or decicion =='учше':
             book.add_record(record1.user)
             esc_e = False
-            return 'close'
+            return 'Closed'
 
         elif decicion == 'n' or decicion == 'not':
             break
+        else:
+            print('Wrong input!')
+
 #START HERE
     while True:
         print('Do you want to add E-mail? "y" (YES) or n (NO). Type "exit" to exit')
@@ -132,16 +146,21 @@ def add():
                 if len(email)>1 and len(email)<25:
                     record1.user['E-mail'] = email
                     break 
+                else:
+                    print(f'You E-mail is {len(email)} symbols. Please no more than 25 symbols') 
             else:
                 print('Format is wrong. Try again')
              
-        elif decicion == 'exit' or decicion == 'esc' or decicion == 'close':
+        elif decicion == 'exit' or decicion == 'esc' or decicion == 'close' or decicion =='учше':
             book.add_record(record1.user)
             esc_e = False
-            return 'close'
+            return 'Closed'
 
         elif decicion == 'n' or decicion == 'not':
             break
+        
+        else:
+            print('Wrong input!')
 
     while True:
         print('Do you want to add Tags? "y" (YES) or n (NO). Type "exit" to exit')
@@ -156,18 +175,20 @@ def add():
                 save()
                 say = 'Successfully changed'
                 return say  
+            else:
+                    print(f'You Tags is {len(tags)} symbols. Please no more than 10 symbols')
 
-        elif decicion == 'exit' or decicion == 'esc' or decicion == 'close':
+        elif decicion == 'exit' or decicion == 'esc' or decicion == 'close' or decicion =='учше':
             book.add_record(record1.user)
             esc_e = False
-            return 'close'
+            return 'Closed'
 
         elif decicion == 'n' or decicion == 'not':
             book.add_record(record1.user)
             save()
-            say = 'Successfully changed'
             return say
-
+        else:
+            print('Wrong input!')
 
 @error_handler
 def change():
@@ -177,10 +198,13 @@ def change():
     old_name = str(input())
     old_name = old_name.lower()
     result = book.find_value(old_name)
+    for i in result:
+        if i["Name"]!=old_name:
+            result.remove(i)
     show_find(result)
 
-    print('To change Name: type "name"./nTo change Phone: type "phone"./nTo change Birthday: type "birthday"./nTo change Address: type "address"./n')
-    print('To change E-mail: type "email"./nTo change Tags: type "tags".')
+    print('To change Name: type "name".\nTo change Phone: type "phone".\nTo change Birthday: type "birthday".\nTo change Address: type "address".\n')
+    print('To change E-mail: type "email".\nTo change Tags: type "tags".')
     decicion = str(input())
     decicion = decicion.lower()
     
@@ -201,15 +225,16 @@ def change():
                     save()
                 return say
         elif len(result)==1:
-            result['Name'] = new_name
-            save()
+            for i in result:
+                i['Name'] = new_name
+                save()
             return say
 
         else:
             print(f'{old_name} not in Adress Book')
 
     elif decicion == 'phone':
-        print('Type phone you want to change.If there are no phones - just press "enter"')
+        print('Type phone you want to change.If there are no phones - just press "enter".')
         old_name = str(input())
         print('Type new phone')
         new_name = str(input())
@@ -234,7 +259,7 @@ def change():
                 
 
     elif decicion == 'birthday':
-        print('Type birthday you want to change. Expected day.month.year(Example:25.12.1970). If there is no birthday - just press "enter"')
+        print('Type birthday you want to change. Expected day.month.year(Example:25.12.1970). If there is no birthday - just press "enter".')
         old_name = str(input())
         print('Type new birthday. Expected day.month.year(Example:25.12.1970)')
         new_name = str(input())
@@ -251,7 +276,7 @@ def change():
                 print(f'{old_name} not in Adress Book')
 
     elif decicion == 'address':
-        print('Type address you want to change. If there is no address - just press "enter")')
+        print('Type address you want to change. If there is no address - just press "enter".')
         old_name = str(input())
         print('Type new address.')
         new_name = str(input())
@@ -285,7 +310,7 @@ def change():
                 print(f'{old_name} not in Adress Book')
 
     elif decicion == 'tags'or decicion == 'tag':
-        print('Type Tags you want to change.)')
+        print('Type Tags you want to change. If there are no Tags - just press "enter"')
         old_name = str(input())
         print('Type new Tags.')
         new_name = str(input())
@@ -301,7 +326,7 @@ def change():
             else:
                 print(f'{old_name} not in Adress Book')
 
-    elif decicion == 'exit' or decicion == 'esc' or decicion == 'close':
+    elif decicion == 'exit' or decicion == 'esc' or decicion == 'close' or decicion =='учше':
         esc_e = False
         return esc_e
 #START CHaNGE
@@ -322,15 +347,27 @@ def clean_folder():
 
 @error_handler
 def birthday():
-    print("Please write how many days in advance to warn you about people's birthday")
-    n=int(input())
-    result=[]
-    for i in book:
-        if i["Birthday"]!=0 and i["Birthday"]!=None:
-            if days_to_birthday(i["Birthday"]) <=n:
-                print("HERE")
-                result.append(i)
-
+    print("If you want to find, who'll have birthday in exact date PRESS 1./nIf you need to know who'll have birthday in period of time PRESS 2./n")
+    decision=input()
+    if decision==1:
+        print("Please write how many days in advance to warn you about people's birthday")
+        n=int(input())
+        result=[]
+        for i in book:
+            if i["Birthday"]!=0 and i["Birthday"]!=None:
+                if days_to_birthday(i["Birthday"]) =n:
+                    result.append(i)
+    elif decision==2:
+        print("Please write how many days in advance to warn you about people's birthday")
+        n=int(input())
+        result=[]
+        for i in book:
+            if i["Birthday"]!=0 and i["Birthday"]!=None:
+                if days_to_birthday(i["Birthday"])<=n:
+                    result.append(i)
+    else:
+        print('Wrong input!')
+                       
     print(f'In future {n} days you need to congratulate {len(result)} people from your Addressbook')        
     show_find(result)
     
@@ -353,30 +390,36 @@ def delete():
     print('Put Name, you want to find and delete from your addressbook')
     find_v = str(input())
     result = book.find_value(find_v)
-    
+    for i in result:
+        if i["Name"]!=find_v:
+            result.remove(i)
+
     if len(result)>1:
         print(f"I've found {len(result)} notes with this Name")
         show_find(result)
         print('Please enter Id to delete the right note')
-        find_v = result[0]["Name"]
+        
         del_input=int(input())
         for i in book:
             if i["Name"]==find_v and i["Id"]==del_input:
                 book.remove(i)
                 print(f"You've deleted {find_v}")
-                save()  
-    else:
-        find_v = result["Name"]
-        for i in book:
+                save() 
+
+    elif len(result)==1:
+        for i in result:
             if i["Name"]==find_v:
                 book.remove(i)
                 print(f"You've deleted {find_v}")
-                save()           
+                save()   
+
+    else:
+        print(f"{find_v} not found")        
 #end
 @error_handler
 def find():
-    #global path, book
-    print('Put information you want to find')
+    
+    print('Put word, half of word or digits you want to find')
     find_v = str(input())
     result = book.find_value(find_v)
     show_find(result)
@@ -523,7 +566,7 @@ def handler(user_inpu):
 
 
 def input_error():
-    return 'Wrong input! Type "help" for commands or "exit" to exit'
+    return 'Wrong input! Type exact command you want to do,"exit" to exit or "help" for list of commands.'
 
 
 ANSWEARS = {'add': add, 'change': change, 'close': exit, 'exit': exit,
