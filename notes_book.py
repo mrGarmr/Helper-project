@@ -1,6 +1,5 @@
 from collections import UserList
 
-
 class NotesBook(UserList):
     # список списков: список заметок, каждая заметка - список с 2 элементов:
     # заметка[0]-множество тєгов, заметка[1] - текст заметки
@@ -75,7 +74,6 @@ class NotesBook(UserList):
         for note in self:
             result += note[0]+"\n" + note[1]+"\n"
         return result
-
 
 def notes_main():
     # техническая функция для проверки работы модуля, можно удалить
