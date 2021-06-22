@@ -1,6 +1,8 @@
+import pickle
 import re
 from collections import UserList
-from datetime import datetime
+from datetime import datetime, timedelta, date
+
 
 class Field:
     def __init__(self, value):
@@ -44,7 +46,7 @@ class AddressBook(UserList):
                                 break
         return result
 
-    def iterator1(self, n):
+    def iterator(self, n):
         counter = 0
         result = ""
         for i in self:
