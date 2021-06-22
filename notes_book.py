@@ -76,11 +76,20 @@ class NotesBook(UserList):
         #     result += note[0]+"\n" + note[1]+"\n"
 
         # Печать шапки с названием столбцов
-        result += f"{62*'_'} \n"
+        result += f" {61*'_'} \n"
         result += '|           TAGS           |             NOTE                 |\n'
-        result += f"{62*'_'} \n"
+        result += f" {61*'_'} \n"
+        # Печать заметок
         for note in self:
-            result += f'|{note[0]:<26}| {note[1]:<26}|\n'
+            lines = note[1].split('\n')
+            counter = 0
+            for line in lines:
+                if counter == 0:
+                    result += f'|{note[0]:<26}| {line:<33}|\n'
+                else:
+                    result += f'|{" ":<26}| {line:<33}|\n'
+                counter += 1
+            result += f'|{26*"_"}|{34*"_"}|\n'
         return result
 
 
@@ -89,14 +98,14 @@ def notes_main():
     global notes_book
     notes_book = NotesBook()
 
-    print(add_note())
-    print(add_note())
+    # print(add_note())
+    # print(add_note())
     # print(find_note())
     # print(sort_notes())
     # print(delete_note())
 
-    print(edit_note())
-    print(show_notes())
+    # print(edit_note())
+    # print(show_notes())
 
 
 if __name__ == '__main__':
