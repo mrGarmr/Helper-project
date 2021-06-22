@@ -141,7 +141,7 @@ def add():
         else:
             print('Wrong input!')
 
-# START HERE
+    # START HERE
     while True:
         print('Do you want to add E-mail? "y" (YES) or n (NO). Type "exit" to exit')
         decision = str(input())
@@ -206,7 +206,7 @@ def change():
 
     print('Type name of record you want to change')
     old_name = str(input())
-    old_name = old_name.lower()
+    #old_name = old_name.lower()
     result = book.find_value(old_name)
     for i in result:
         if i["Name"] != old_name:
@@ -241,7 +241,6 @@ def change():
 
         else:
             print(f'{old_name} not in Adress Book')
-
     elif decision == 'phone' or decision == 'зрщту':
         print('Type phone you want to change.If there are no phones - just press "enter".')
         old_name = str(input())
@@ -478,23 +477,24 @@ def save():
 
 def show1():
     number = input('Please input the number or record on 1 page: ')
+    try:
+        number = int(number)
+    except:
+        number = 10
     print("The contacts book is following:")
-    # Печать шапки с названием столбцов
-    print(145*'_')
-    print('| ID  |           Name           |     Phones      |  Birthday  |           Address            |              E-mail            |      Tags      |')
-    print(145*'-')
-    if number != 0 or number != None:
-        iter = book.iterator1(number)
-        for i in iter:
-            print(i)
-            print(57*'_'+'The end of the page'+58*'_')
-        return "The end of the contacts book"
-    else:
-        iter = book.iterator1(10)
-        for i in iter:
-            print(i)
-            print(57*'_'+'The end of the page'+58*'_')
-        return "The end of the contacts book"
+    if number == 0 or number == None:
+        number = 10
+    iter = book.iterator1(number)
+    for i in iter:
+        # Печать шапки с названием столбцов
+        print(145*'_')
+        print('| ID  |           Name           |     Phones      |  Birthday  |           Address            |              E-mail            |      Tags      |')
+        print(145*'-')
+        print(i)
+        print(62*'_'+'The end of the page'+62*'_')
+        input()
+    return "The end of the contacts book"
+
 ##############################################################
 # Команды для Handler для работы с NotesBook
 
