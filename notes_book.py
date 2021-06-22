@@ -72,8 +72,15 @@ class NotesBook(UserList):
 
     def __str__(self):
         result = ""
+        # for note in self:
+        #     result += note[0]+"\n" + note[1]+"\n"
+
+        # Печать шапки с названием столбцов
+        result += f"{62*'_'} \n"
+        result += '|           TAGS           |             NOTE                 |\n'
+        result += f"{62*'_'} \n"
         for note in self:
-            result += note[0]+"\n" + note[1]+"\n"
+            result += f'|{note[0]:<26}| {note[1]:<26}|\n'
         return result
 
 
