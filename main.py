@@ -2,7 +2,7 @@ import pathlib
 import pickle
 from ClassBook import *
 from clean import *
-
+from datetime import datetime, timedelta, date
 from notes_book import NotesBook
 
 def error_handler(func):
@@ -60,6 +60,7 @@ def main():
 
 @error_handler
 def add():
+    say = 'Successfully changed'
     global esc_e, book
     print('Input Name:')
     name = Name(str(input()))
@@ -149,7 +150,7 @@ def add():
                 else:
                     print(f'Your E-mail is {len(email)} symbols. Please no more than 30 symbols') 
             else:
-                print('Format is wrong. Try again')
+                print('Format is wrong. Try again in format: your_nickname@something.domen_name')
              
         elif decision == 'exit' or decision == 'esc' or decision == 'close' or decision =='учше':
             book.add_record(record1.user)
@@ -173,7 +174,6 @@ def add():
                 record1.user['Tags'] = tags
                 book.add_record(record1.user)
                 save()
-                say = 'Successfully changed'
                 return say  
             else:
                     print(f'Your Tags is {len(tags)} symbols. Please no more than 15 symbols')
@@ -193,7 +193,7 @@ def add():
 @error_handler
 def change():
     global book, esc_e
-
+    say = 'Successfully changed'
     print('Type name of record you want to change')
     old_name = str(input())
     old_name = old_name.lower()
@@ -212,7 +212,7 @@ def change():
     if decision == 'name' or decision == 'тфьу':
         print('Type new name')
         new_name = str(input())
-        say = 'Successfully changed'
+        
         if len(result)>1:
             print(f"I've found {len(result)} notes with this Name")
             show_find(result)
@@ -347,16 +347,23 @@ def clean_folder():
 
 @error_handler
 def birthday():
-    print("If you want to find, who'll have birthday in exact date TYPE 1.\nIf you need to know who'll have birthday in period of time TYPE 2.")
+    print("If you want to find, who'll have birthday in exact date TYPE 1.\nIf you need to know who'll have birthday in period of time TYPE 2.\nIf you need to know how many days to somebody's birthday TYPE 3.")
     decision=int(input())
+    
+    today_d = datetime.now().date()
+    d = timedelta(days = n)
+    bday=today_d+d
+    bday = bday.strftime("%d.%m.%Y")
     if decision==1:
-        print("Please write how many days in advance to warn you about people's birthday")
+        print("Please write in how many days will be people's birthday")
         n=int(input())
         result=[]
         for i in book:
             if i["Birthday"]!=0 and i["Birthday"]!=None:
                 if days_to_birthday(i["Birthday"])==n:
                     result.append(i)
+        print(f'On {bday} you need to congratulate {len(result)} people from your Addressbook')        
+        show_find(result)
 
     elif decision==2:
         print("Please write how many days in advance to warn you about people's birthday")
@@ -366,11 +373,13 @@ def birthday():
             if i["Birthday"]!=0 and i["Birthday"]!=None:
                 if days_to_birthday(i["Birthday"])<=n:
                     result.append(i)
+        print(f'In future {n} days you need to congratulate {len(result)} people from your Addressbook')        
+        show_find(result) 
+
     else:
         print('Wrong input!')
                        
-    print(f'In future {n} days you need to congratulate {len(result)} people from your Addressbook')        
-    show_find(result)
+    
     
 
 def days_to_birthday(bday):
