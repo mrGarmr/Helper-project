@@ -46,7 +46,7 @@ class AddressBook(UserList):
                                 break
         return result
 
-    def iterator1(self, n):
+    def iterator(self, n):
         counter = 0
         result = ""
         for i in self:
