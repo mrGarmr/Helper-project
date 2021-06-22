@@ -1,12 +1,8 @@
 import pathlib
 import pickle
-#не используются, пока только закомментировала 
-#import signal
-#import sys
-
 from ClassBook import *
 from clean import *
-from datetime import datetime, date #тоже не исп_ся timedelta
+from datetime import datetime, date 
 from notes_book import NotesBook
 
 
@@ -135,7 +131,8 @@ def add():
                     record1.user['E-mail'] = email
                     break 
             else:
-                print('Format is wrong. Try again')
+#добавила желаемый формат электронной почты
+                print('Format is wrong. Try again in format: your_nickname@something.domen_name')
              
         elif decicion == 'exit' or decicion == 'esc' or decicion == 'close':
             book.add_record(record1.user)

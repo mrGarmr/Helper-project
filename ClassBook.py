@@ -1,5 +1,3 @@
-#в этом файле pickle не исп-ся, перенесла в main
-#import pickle
 import re
 from collections import UserList
 from datetime import datetime #эти модули тоже не исп_ся timedelta, date
