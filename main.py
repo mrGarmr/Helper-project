@@ -212,7 +212,7 @@ def change():
         if i["Name"] != old_name:
             result.remove(i)
     show_find(result)
-
+    say = 'Successfully changed'
     print('To change Name: type "name".\nTo change Phone: type "phone".\nTo change Birthday: type "birthday".\nTo change Address: type "address".\n')
     print('To change E-mail: type "email".\nTo change Tags: type "tags".')
     decision = str(input())
@@ -221,7 +221,7 @@ def change():
     if decision == 'name' or decision == 'тфьу':
         print('Type new name')
         new_name = str(input())
-        say = 'Successfully changed'
+        # say = 'Successfully changed'
         if len(result) > 1:
             print(f"I've found {len(result)} notes with this Name")
             show_find(result)
@@ -475,7 +475,7 @@ def save():
 # @error_handler
 
 
-def show1():
+def show():
     number = input('Please input the number or record on 1 page: ')
     try:
         number = int(number)
@@ -484,14 +484,14 @@ def show1():
     print("The contacts book is following:")
     if number == 0 or number == None:
         number = 10
-    iter = book.iterator1(number)
+    iter = book.iterator(number)
     for i in iter:
         # Печать шапки с названием столбцов
         print(145*'_')
         print('| ID  |           Name           |     Phones      |  Birthday  |           Address            |              E-mail            |      Tags      |')
         print(145*'-')
         print(i)
-        print(62*'_'+'The end of the page'+62*'_')
+        print(63*'_'+'The end of the page'+63*'_')
         input()
     return "The end of the contacts book"
 
@@ -641,7 +641,7 @@ def handler(user_inpu):
         decision = str(input())
         decision = decision.lower()
         if decision == 'y' or decision == 'yes' or decision == 'нуі' or decision == 'н' or decision == 'да' or decision == 'д':
-            return show1()
+            return show()
     else:
         return input_error()
 
@@ -651,7 +651,7 @@ def input_error():
 
 
 ANSWEARS = {'add': add, 'ad': add, '+': add, 'фвв': add, 'change': change, 'срфтпу': change, 'close': exit, 'exit': exit, 'учше': exit,
-            'find': find, 'аштв': find, 'help': help_func, 'рудз': help_func, 'хелп': help_func, 'save': save, 'іфму': save, 'ыфму': save, 'show': show1, 'ырщц': show1, 'ірщц': show1,
+            'find': find, 'аштв': find, 'help': help_func, 'рудз': help_func, 'хелп': help_func, 'save': save, 'іфму': save, 'ыфму': save, 'show': show, 'ырщц': show, 'ірщц': show,
             'delete': delete, 'del': delete, 'вуд': delete, 'вудуеу': delete, 'birthday': birthday, 'ишкервфн': birthday, 'clean': clean_folder, 'сдуфт': clean_folder,
             'add note': add_note, 'фвв тщеу': add_note, 'delete note': delete_note, 'вудуеу тщеу': delete_note, 'edit note': edit_note, 'увше тщеу': edit_note,
             'find note': find_note, 'аштв тщеу': find_note, 'sort notes': sort_notes, 'ыщке тщеуы': sort_notes, 'show notes': show_notes, 'ырщц тщеуы': show_notes}
