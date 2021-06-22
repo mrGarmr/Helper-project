@@ -510,7 +510,7 @@ def show1():
 
 @error_handler
 def add_note():
-    print('Please input your note:')
+    print('Please input your note (press double Enter to finish):')
     # ввод многострочной заметки
     lines = []
     flag = True
@@ -525,6 +525,7 @@ def add_note():
     hashtag = input('Please input the hashtag of your note: \n')
     # добавление заметки в NotesBook
     notes_book.add_note(text, hashtag.upper())
+    save()
     return "Your note is successfully saved"
 
 
@@ -533,6 +534,7 @@ def delete_note():
     print("Please input a hashtag of note that you would like to delete:")
     hashtag = input().upper()
     notes_book.delete_note(hashtag)
+    save()
     return f"The note with hashtag '{hashtag}' is deleted"
 
 
@@ -541,6 +543,7 @@ def edit_note():
     print("Please input a hashtag of note that you would like to edit:")
     hashtag = input().upper()
     notes_book.edit_note(hashtag)
+    save()
     return "The note is edited"
 
 
@@ -549,8 +552,12 @@ def find_note():
     print('Please input keyword for search:')
     keyword = input().upper()
     print('THE RESULTS OF SEARCH:')
-    print(notes_book.find_note(keyword))
-    return "The search is sucessfully finished"
+    if notes_book.find_note(keyword):
+        print(notes_book.find_note(keyword))
+        result = "The search is sucessfully finished"
+    else:
+        result = f"The keyword {keyword} is absent in Notes Book"
+    return result
 
 
 @error_handler
