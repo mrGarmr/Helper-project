@@ -1,5 +1,5 @@
 import pathlib
-
+import pickle
 from ClassBook import *
 from clean import *
 
@@ -123,7 +123,7 @@ def add():
                 record1.user['Address'] = address
                 break
             else:
-                print(f'You Address is {len(address)} symbols. Please no more than 30 symbols')  
+                print(f'Your Address is {len(address)} symbols. Please no more than 30 symbols')  
         elif decision == 'exit' or decision == 'esc' or decision == 'close' or decision =='учше':
             book.add_record(record1.user)
             esc_e = False
@@ -147,7 +147,7 @@ def add():
                     record1.user['E-mail'] = email
                     break 
                 else:
-                    print(f'You E-mail is {len(email)} symbols. Please no more than 30 symbols') 
+                    print(f'Your E-mail is {len(email)} symbols. Please no more than 30 symbols') 
             else:
                 print('Format is wrong. Try again')
              
@@ -176,7 +176,7 @@ def add():
                 say = 'Successfully changed'
                 return say  
             else:
-                    print(f'You Tags is {len(tags)} symbols. Please no more than 15 symbols')
+                    print(f'Your Tags is {len(tags)} symbols. Please no more than 15 symbols')
 
         elif decision == 'exit' or decision == 'esc' or decision == 'close' or decision =='учше':
             book.add_record(record1.user)

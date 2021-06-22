@@ -1,4 +1,4 @@
-import pickle
+
 import re
 from collections import UserList
 from datetime import datetime, timedelta, date
