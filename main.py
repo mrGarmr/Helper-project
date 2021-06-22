@@ -24,7 +24,7 @@ def main():
     while True:
         print(100*'_')
         print('What do you want to do?\nYou can use commands:\n')
-        print('1.  "load" to load Adress Book and \n2.  "new" to create new Book\n3.  "exit"/"close" to close application:')
+        print('1.  "load" to load Adress Book\n2.  "new" to create new Book\n3.  "exit"/"close" to close application:')
         command = str(input())
         if command == "load" or command == "дщфв" or command == "1":
             print(r'Please write the full path to file. Example: "d:\test\book.txt":')
