@@ -349,15 +349,15 @@ def clean_folder():
 def birthday():
     print("If you want to find, who'll have birthday in exact date TYPE 1.\nIf you need to know who'll have birthday in period of time TYPE 2.\nIf you need to know how many days to somebody's birthday TYPE 3.")
     decision=int(input())
-    
-    today_d = datetime.now().date()
-    d = timedelta(days = n)
-    bday=today_d+d
-    bday = bday.strftime("%d.%m.%Y")
+    result=[]
+
     if decision==1:
         print("Please write in how many days will be people's birthday")
         n=int(input())
-        result=[]
+        today_d = datetime.now().date()
+        d = timedelta(days = n)
+        bday=today_d+d
+        bday = bday.strftime("%d.%m.%Y")
         for i in book:
             if i["Birthday"]!=0 and i["Birthday"]!=None:
                 if days_to_birthday(i["Birthday"])==n:
@@ -368,7 +368,6 @@ def birthday():
     elif decision==2:
         print("Please write how many days in advance to warn you about people's birthday")
         n=int(input())
-        result=[]
         for i in book:
             if i["Birthday"]!=0 and i["Birthday"]!=None:
                 if days_to_birthday(i["Birthday"])<=n:
@@ -376,8 +375,29 @@ def birthday():
         print(f'In future {n} days you need to congratulate {len(result)} people from your Addressbook')        
         show_find(result) 
 
+    elif decision==3:
+        print("Please write name to know how many days left to birthday")
+        name=input()
+        result = book.find_value(name)
+        if len(result)>1:
+            print(f"I've found {len(result)} notes with this Name")
+            show_find(result)
+            print('Please enter Id to know how many days left to birthday the exact person')
+            find_v = result[0]["Name"]
+            id_input=int(input())
+            for i in result:
+                if i["Name"]==find_v and i["Id"]==id_input:
+                    days=days_to_birthday(i['Birthday'])
+                    print(f'{i["Name"]} from your Addressbook will have birthday in {days} days. Do not forget to congratulate!')   
+                  
+        elif len(result)==1:
+            for i in result:
+                days=days_to_birthday(i['Birthday'])
+                print(f'{i["Name"]} from your Addressbook will have birthday in {days} days. Do not forget to congratulate!')
+
+
     else:
-        print('Wrong input!')
+        print('Not found this Name!')
                        
     
     
@@ -644,7 +664,7 @@ CHANGE=['chane', 'chnge', 'cange', 'chenge', 'hange', 'chng', 'cchenge', 'chheng
 FIND=['fnd', 'ind', 'fid', 'fin', 'faind', 'fand', 'ffind', 'fiind', 'finnd', 'findd', 'seek', 'look', 'look for', 'атв', 'афтв', 'штв', 'афт', 'поиск', 'искать', 'найти', 'шштв']
 HELP=['&', '?', 'hlp', 'what', 'why', 'where', 'how', 'elp', 'hep', 'hel', 'healp', 'halp', 'hhelp', 'heelp', 'hellp', 'helpp', 'рфдз', 'рдз', 'руз', 'руд', 'помощь']
 DELETE=['вуд', '-', 'del', 'вудуеу', 'вуфдуеу', 'dealete', 'elete', 'elet', 'delet', 'dlte', 'dlt', 'lete', 'dealete', 'вудуе', 'удалить', 'clear', 'pop']
-BIRTHDAY=['lf', 'birsday', 'bersday', 'bezday', 'bethday', 'birzday', 'bearsday', 'birthdey', 'beersday', 'brthday', 'иууксвфн', 'ишквфн', 'др', 'рождение', 'бездей', 'бирсдей', 'днюха', 'birthday people', 'birthday boy', 'birthday girl']
+BIRTHDAY=['lf', 'birsday', 'bersday', 'bezday', 'bethday', 'birzday', 'bearsday', 'birthdey', 'beersday', 'brthday', 'иууксвфн', 'ишквфн', 'др', 'рождение', 'бездей', 'бирсдей', 'днюха', 'birthday people', 'birthday boy', 'birthday girl', 'birthda', 'birtda', 'birth']
 CLEAN=['cleen', 'clan', 'clin', 'cleane', 'cleene', 'klin', 'klean', 'lean', 'clen', 'kleen', 'суф', 'лдуут', 'лдуфт', 'сдуфту', 'клн', 'клин', 'разобрать', 'мусор']
 SHOW=['ырща', 'ырщцу', 'showe', 'schow', 'schove', 'chov', 'shove', 'schov', 'schowe', 'how', 'sho', 'shouv', 'шов', 'ірщцу', 'показать', 'рщц', 'ірщм']
 
