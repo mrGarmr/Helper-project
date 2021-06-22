@@ -1,0 +1,3 @@
+[console_scripts]
+helper_project = main:main
+

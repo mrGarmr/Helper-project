@@ -12,7 +12,7 @@ https://github.com/mrGarmr/Helper-project
 • Ходыка Анна (https://github.com/anna-khodyka)
 
 Установка
-<добавить пошаговую инструкцию по установке пакета>
+pip install helper_project
 
 Инструкция по работе с Персональным Помощником
 
