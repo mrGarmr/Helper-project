@@ -1,4 +1,12 @@
+import pathlib
+import pickle
+#не используются, пока только закомментировала 
+#import signal
+#import sys
+
 from ClassBook import *
+from clean import *
+from datetime import datetime, date #тоже не исп_ся timedelta
 from notes_book import NotesBook
 
 
@@ -13,8 +21,7 @@ def error_handler(func):
             return result
     return inner
 
-
-#@error_handler
+@error_handler
 def main():
     global path, book, notes_book, esc_e
     esc_e = True
@@ -46,16 +53,15 @@ def main():
             print('Wrong command.')
 
     while esc_e:
-        user_input = input(
+        user_inpu = input(
             'What do you want to do? Type "help" for additional commands.\n')
-        result = handler(user_input)
+        result = handler(user_inpu)
         if result:
             print(result)
         elif result == None:
             pass
         else:
             break
-
 
 @error_handler
 def add():
@@ -168,55 +174,133 @@ def add():
 @error_handler
 def change():
     global book, esc_e
-    print('To change name: type "name", to change phone: type "phone", to change birthday: type "birthday"')
+    #перенесла say сюда из певого if, а то в других циклах он не определялся
+    say = 'Successfully changed'
+    print('Type name of record you want to change')
+    old_name = str(input())
+    old_name = old_name.lower()
+    result = book.find_value(old_name)
+    show_find(result)
+
+    print('To change Name: type "name"./nTo change Phone: type "phone"./nTo change Birthday: type "birthday"./nTo change Address: type "address"./n')
+    print('To change E-mail: type "email"./nTo change Tags: type "tags".')
     decicion = str(input())
     decicion = decicion.lower()
+    
+    
     if decicion == 'name':
-        print('Type name you want to change')
-        old_name = str(input())
-        old_name = old_name.lower()
         print('Type new name')
         new_name = str(input())
-        result = book.find_value(old_name)
+        
         if len(result)>1:
             print(f"I've found {len(result)} notes with this Name")
             show_find(result)
             print('Please enter Id to change the right name')
             find_v = result[0]["Name"]
             del_input=int(input())
-            for i in book:
+            for i in result:
                 if i["Name"]==find_v and i["Id"]==del_input:
                     i['Name'] = new_name
-                    say = 'Successfully changed'
+                    save()
+                return say
+        elif len(result)==1:
+            result['Name'] = new_name
+            save()
+            return say
+
+        else:
+            print(f'{old_name} not in Adress Book')
+
+    elif decicion == 'phone':
+        print('Type phone you want to change.If there are no phones - just press "enter"')
+        old_name = str(input())
+        print('Type new phone')
+        new_name = str(input())
+        for i in result:
+            if len(i['Phones'])>1:
+                for j in i['Phones']:
+                    if j == old_name:
+                        i['Phones'].remove(j)
+                        i['Phones'].append(new_name)
+                        save()
+                        return say
+                    else:
+                        print(f'{old_name} not in Adress Book')    
+            elif len(i['Phones'])==1:
+                i['Phones'].remove(old_name)
+                i['Phones'].append(new_name)
+                return say
+            elif len(i['Phones'])==0:
+                i['Phones'].append(new_name)
+                save()
+                return say                   
+                
+
+    elif decicion == 'birthday':
+        print('Type birthday you want to change. Expected day.month.year(Example:25.12.1970). If there is no birthday - just press "enter"')
+        old_name = str(input())
+        print('Type new birthday. Expected day.month.year(Example:25.12.1970)')
+        new_name = str(input())
+        for i in result:
+            if i['Birthday'] == old_name:
+                i['Birthday'] = new_name
+                save()
+                return say
+            elif i['Birthday'] ==None:
+                i['Birthday'] = new_name
+                save()
                 return say
             else:
                 print(f'{old_name} not in Adress Book')
 
-    elif decicion == 'phone':
-        print('Type phone you want to change')
+    elif decicion == 'address':
+        print('Type address you want to change. If there is no address - just press "enter")')
         old_name = str(input())
-        print('Type new phone')
+        print('Type new address.')
         new_name = str(input())
-        for i in book:
-            for j in i['Phones']:
-                if j == old_name:
-                    i['Phones'].remove(j)
-                    i['Phones'].append(new_name)
-                    say = 'Successfully changed'
-                    return say
+        for i in result:
+            if i['Address'] == old_name:
+                i['Address'] = new_name
+                save()
+                return say
+            elif i['Address'] == None:
+                i['Address'] = new_name
+                save()
+                return say
             else:
                 print(f'{old_name} not in Adress Book')
-    elif decicion == 'birthday':
-        print(
-            'Type birthday you want to change. Expected day.month.year(Example:25.12.1970)')
+
+    elif decicion == 'email' or decicion == 'e-mail':
+        print('Type E-mail you want to change.)')
         old_name = str(input())
-        print('Type new birthday. Expected day.month.year(Example:25.12.1970)')
+        print('Type new E-mail.')
         new_name = str(input())
-        for i in book:
-            if i['Birthday'] == old_name:
-                i['Birthday'] = new_name
-                say = 'Successfully changed'
+        for i in result:
+            if i['E-mail'] == old_name:
+                i['E-mail'] = new_name
+                save()
                 return say
+            elif i['E-mail'] == None:
+                i['E-mail'] = new_name
+                save()
+                return say    
+            else:
+                print(f'{old_name} not in Adress Book')
+
+    elif decicion == 'tags'or decicion == 'tag':
+        print('Type Tags you want to change.)')
+        old_name = str(input())
+        print('Type new Tags.')
+        new_name = str(input())
+        for i in result:
+            if i['Tags'] == old_name:
+                i['Tags'] = new_name
+                save()
+                return say
+            elif i['Tags'] == None:
+                i['Tags'] = new_name
+                save()
+                return say       
             else:
                 print(f'{old_name} not in Adress Book')
 
@@ -224,6 +308,21 @@ def change():
         esc_e = False
         return esc_e
 #START CHaNGE
+@error_handler
+def clean_folder():
+    #global user_input
+    print(100*"_")
+    print('Welcome to clean folder instrument!')
+    print(100*"_")
+    print('Please enter path to clean and structurise.')
+    user_input=str(input())
+       
+    path=pathlib.Path(user_input)
+    print_recursive(path,user_input)
+    delete_dir(user_input)
+    #D:\Tresh
+    return 'Everything done'
+
 @error_handler
 def birthday():
     print("Please write how many days in advance to warn you about people's birthday")
@@ -407,18 +506,23 @@ def show_notes():
 
 
 def help_func():
-    print(40*'*')
+    print(60*'*')
+    print(20*'*'+'WORKING WITH ADDRESSBOOK:'+20*'*')
     print('*Type "add"    to add new contact.\n*Type "birthday" to see people that have birthday nearest days.\n*Type "change" to change contact\'s phone, name or birthday.\n*Type "find"   to see information that you are looking for.\n*Type "delete" to delete information that you don\'t need.\n*Type "show"   to show you all phonebook.\n*Type "save"   to save and exit.\n*Type "exit"   to exit')
-
-    return (40*'*')
+    print(20*'*'+'WORKING WITH NOTESBOOK:'+20*'*')
+    print('*Type "add note"    to add new note.\n*Type "delete note"    to delete note.\n*Type "edit note"    to edit note.\n*Type "find note"    to look through notes.\n*Type "sort notes"    to sort notes.\n*Type "show notes"    to show your notes.\n')
+    print(20*'*'+'WORKING WITH CLEANFOLDER:'+20*'*')
+    print('*Type "clean"    to clean and structurise folder.\n') 
+    return (60*'*')
 
 
 @error_handler
-def handler(user_input):
-    if user_input in ANSWEARS.keys():
-        return ANSWEARS[user_input]()
+def handler(user_inpu):
+    if user_inpu in ANSWEARS.keys():
+        return ANSWEARS[user_inpu]()
     else:
         return input_error()
+
 
 
 def input_error():
@@ -427,10 +531,10 @@ def input_error():
 
 ANSWEARS = {'add': add, 'change': change, 'close': exit, 'exit': exit,
             'find': find, 'help': help_func, 'save': save, 'show': show1,
-            'delete':delete,'birthday':birthday,
+            'delete':delete,'birthday':birthday, 'clean': clean_folder,
             'add note': add_note, 'delete note': delete_note, 'edit note': edit_note,
             'find note': find_note, 'sort notes': sort_notes, 'show notes': show_notes}
 
+
 if __name__ == '__main__':
     main()
-
