@@ -1,7 +1,7 @@
 import pathlib
 import pickle
 import re
-from ClassBook import *
+from classbook import *
 from clean import *
 from datetime import datetime, timedelta, date
 from notes_book import NotesBook
