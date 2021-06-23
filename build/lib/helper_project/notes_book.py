@@ -40,6 +40,9 @@ class NotesBook(UserList):
                         lines.insert(counter, new_line)
                     counter += 1
                 note[1] = '\n'.join(lines)
+                print("The note is edited")
+        else:
+            print("Not found this Tag")
 
     def find_note(self, keyword):
         # находит все заметки, в тэгах которых содержится keyword
@@ -72,6 +75,9 @@ class NotesBook(UserList):
 
     def __str__(self):
         result = ""
+        # for note in self:
+        #     result += note[0]+"\n" + note[1]+"\n"
+
         # Печать шапки с названием столбцов
         result += f" {61*'_'} \n"
         result += '|           TAGS           |             NOTE                 |\n'
@@ -95,14 +101,14 @@ def notes_main():
     global notes_book
     notes_book = NotesBook()
 
-    print(add_note())
-    print(add_note())
+    # print(add_note())
+    # print(add_note())
     # print(find_note())
     # print(sort_notes())
     # print(delete_note())
 
-    print(edit_note())
-    print(show_notes())
+    # print(edit_note())
+    # print(show_notes())
 
 
 if __name__ == '__main__':

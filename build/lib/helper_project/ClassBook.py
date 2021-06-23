@@ -1,4 +1,5 @@
 import re
+
 from collections import UserList
 from datetime import datetime
 
@@ -48,10 +49,6 @@ class AddressBook(UserList):
         counter = 0
         result = ""
         for i in self:
-            # записываем в result строку которая содержит описание 1 контакта (Record) c AdressBook
-            #  взято с Володи кода
-            # Именно 'этот кусочек надо редактировать чтобы добавить адрес и email
-            
             result += f'|{i["Id"]:<5}| {i["Name"]:<25}| { i["Phones"][0] if len(i["Phones"])>=1 else " ":<15} | {i["Birthday"]if i["Birthday"] else " ":<11}|{i["Address"]if i["Address"] else " ":<30}|  {i["E-mail"]if i["E-mail"] else " ":<30}| {i["Tags"] if i["Tags"] else " ":<15}|\n'
             if len(i["Phones"]) > 1:
                 for elem in i["Phones"][1:]:

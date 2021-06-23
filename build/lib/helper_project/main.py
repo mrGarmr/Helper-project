@@ -105,14 +105,9 @@ def add():
         if decision == 'y' or decision == 'yes' or decision == 'нуі' or decision == 'н' or decision == 'да' or decision == 'д':
             print('Input Birthday. Expected day.month.year(Example:25.12.1970)')
             birthday = str(input())
+            record1.user['Birthday'] = birthday
+            break
 
-            try:
-                birthday = datetime.strptime(birthday, '%d.%m.%Y')
-                record1.user['Birthday'] = birthday
-                break
-            except Exception:
-                print("Incorrect format, expected day.month.year (Example:25.12.1970)")
-            
         elif decision == 'exit' or decision == 'esc' or decision == 'close' or decision =='учше':
             book.add_record(record1.user)
             esc_e = False
@@ -210,9 +205,9 @@ def change():
     old_name = str(input())
     old_name = old_name.lower()
     result = book.find_value(old_name)
-    for i in result:
-        if i["Name"].lower()!=old_name:
-            result.remove(i)
+    #for i in result:
+        #if i["Name"].lower()!=old_name:
+            #result.remove(i)
 
     if len(result)>0 and len(result)!=None:
         show_find(result)
@@ -230,10 +225,10 @@ def change():
                 print(f"I've found {len(result)} notes with this Name")
                 show_find(result)
                 print('Please enter Id to change the right name')
-                find_v = result[0]["Name"]
+                #find_v = result[0]["Name"]
                 del_input=int(input())
                 for i in result:
-                    if i["Name"]==find_v and i["Id"]==del_input:
+                    if i["Id"]==del_input:
                         i['Name'] = new_name
                         save()
                     return say
@@ -403,10 +398,9 @@ def birthday():
             print(f"I've found {len(result)} notes with this Name")
             show_find(result)
             print('Please enter Id to know how many days left to birthday the exact person')
-            find_v = result[0]["Name"]
             id_input=int(input())
             for i in result:
-                if i["Name"]==find_v and i["Id"]==id_input:
+                if i["Id"]==id_input:
                     days=days_to_birthday(i['Birthday'])
                     print(f'{i["Name"]} from your Addressbook will have birthday in {days} days. Do not forget to congratulate!')   
                   
@@ -501,12 +495,12 @@ def exit():
     esc_e = False
     return "Good Bye"
 
+
 def save():
     global path, book, notes_book
     with open(path, 'wb') as fh:
         pickle.dump(book, fh)
         pickle.dump(notes_book, fh)
-        # return 'Successfully saved'
 
 #@error_handler
 def show1():
@@ -525,7 +519,7 @@ def show1():
         print('| ID  |           Name           |     Phones      |  Birthday  |           Address            |              E-mail            |      Tags      |')
         print(145*'-')
         print(i)
-        print(63*'_'+'The end of the page'+63*'_')
+        print(63*'_'+'The end of the page. PRESS ENTER'+63*'_')
         input()
     return "The end of the contacts book"
 ##############################################################
@@ -565,7 +559,7 @@ def edit_note():
     print("Please input a hashtag of note that you would like to edit:")
     hashtag = input().upper()
     notes_book.edit_note(hashtag)
-    return "The note is edited"
+    
 
 
 @error_handler
@@ -573,9 +567,12 @@ def find_note():
     print('Please input keyword for search:')
     keyword = input().upper()
     print('THE RESULTS OF SEARCH:')
-    print(notes_book.find_note(keyword))
-    return "The search is sucessfully finished"
-
+    result=notes_book.find_note(keyword)
+    if result:
+        print(result)
+        return "The search is sucessfully finished"
+    else:
+        return "Not found keyword"
 
 @error_handler
 def sort_notes():
@@ -683,11 +680,11 @@ ANSWEARS = {'add': add, 'ad': add, '+': add, 'фвв': add,'change': change, 'с
             'find note': find_note, 'аштв тщеу': find_note, 'sort notes': sort_notes, 'ыщке тщеуы': sort_notes, 'show notes': show_notes, 'ырщц тщеуы': show_notes }
 
 ADD=['a','ad','addd','asd','asdd','sdd','adf', 'фів', 'івв', 'фівв', 'фввв', 'фва', 'вв', 'ыва', 'фвы', 'фыв', 'явв', 'фв']
-CHANGE=['chane', 'chnge', 'cange', 'chenge', 'hange', 'chng', 'cchenge', 'chhenge', 'cheenge', 'chaange', 'сменить', 'chang', 'срутпу', 'срутп', 'менять', 'изменить', 'срфтп', 'рсфтпу', 'срутпу']
+CHANGE=['chane', 'chnge', 'cange', 'chenge', 'hange', 'chng', 'cchenge', 'chhenge', 'cheenge', 'chaange', 'сменить', 'chang', 'срутпу', 'срутп', 'менять', 'изменить', 'срфтп', 'рсфтпу', 'срутпу','cheng']
 FIND=['fnd', 'ind', 'fid', 'fin', 'faind', 'fand', 'ffind', 'fiind', 'finnd', 'findd', 'seek', 'look', 'look for', 'атв', 'афтв', 'штв', 'афт', 'поиск', 'искать', 'найти', 'шштв']
 HELP=['&', '?', 'hlp', 'what', 'why', 'where', 'how', 'elp', 'hep', 'hel', 'healp', 'halp', 'hhelp', 'heelp', 'hellp', 'helpp', 'рфдз', 'рдз', 'руз', 'руд', 'помощь']
 DELETE=['вуд', '-', 'del', 'вудуеу', 'вуфдуеу', 'dealete', 'elete', 'elet', 'delet', 'dlte', 'dlt', 'lete', 'dealete', 'вудуе', 'удалить', 'clear', 'pop']
-BIRTHDAY=['lf', 'birsday', 'bersday', 'bezday', 'bethday', 'birzday', 'bearsday', 'birthdey', 'beersday', 'brthday', 'иууксвфн', 'ишквфн', 'др', 'рождение', 'бездей', 'бирсдей', 'днюха', 'birthday people', 'birthday boy', 'birthday girl', 'birthda', 'birtda', 'birth']
+BIRTHDAY=['lf', 'birsday', 'bersday', 'bezday', 'bethday', 'birzday', 'bearsday', 'birthdey', 'beersday', 'brthday', 'иууксвфн', 'ишквфн', 'др', 'рождение', 'бездей', 'бирсдей', 'днюха', 'birthday people', 'birthday boy', 'birthday girl', 'birthda', 'birtda', 'birth','иуервфн', 'иуівфн', 'birt']
 CLEAN=['cleen', 'clan', 'clin', 'cleane', 'cleene', 'klin', 'klean', 'lean', 'clen', 'kleen', 'суф', 'лдуут', 'лдуфт', 'сдуфту', 'клн', 'клин', 'разобрать', 'мусор']
 SHOW=['ырща', 'ырщцу', 'showe', 'schow', 'schove', 'chov', 'shove', 'schov', 'schowe', 'how', 'sho', 'shouv', 'шов', 'ірщцу', 'показать', 'рщц', 'ірщм']
 
