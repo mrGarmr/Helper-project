@@ -1,0 +1,12 @@
+MANIFEST.in
+setup.py
+helper/__init__.py
+helper/classbook.py
+helper/clean.py
+helper/main.py
+helper/notes_book.py
+helper.egg-info/PKG-INFO
+helper.egg-info/SOURCES.txt
+helper.egg-info/dependency_links.txt
+helper.egg-info/entry_points.txt
+helper.egg-info/top_level.txt

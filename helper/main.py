@@ -1,10 +1,11 @@
 import pathlib
 import pickle
 import re
-from ClassBook import *
+from classbook import *
 from clean import *
 from datetime import datetime, timedelta, date
 from notes_book import NotesBook
+import json
 
 def error_handler(func):
     def inner(*args):
@@ -29,13 +30,19 @@ def main():
         if command == "load" or command == "дщфв" or command == "1":
             print(r'Please write the full path to file. Example: "d:\test\book.txt":')
             path = str(input())
+            path_a=path+'\\addressbook.txt'
+            path_n=path+'\\notebook.txt'
             try:
-                with open(path, 'rb') as fh:
+                with open(path_a, 'rb') as fh:
                     book = pickle.load(fh)
+            except:
+                print('Please write right path to file! This file is empty!')
+            try:
+                with open(path_n, 'rb') as fh:
                     notes_book = pickle.load(fh)
                     break
             except:
-                print('Please write right path to file! This file is empty!')
+                print('Please write right path to file! This file is empty!')    
 
         elif command == 'new' or command == "туц" or command == "2":
             print(r'Please write the full path where to create file. Example: "d:\test\book.txt":')
@@ -498,8 +505,11 @@ def exit():
 
 def save():
     global path, book, notes_book
-    with open(path, 'wb') as fh:
+    path_a=path+'\\addressbook.txt'
+    path_n=path+'\\notebook.txt'   
+    with open(path_a, 'wb') as fh:
         pickle.dump(book, fh)
+    with open(path_n, 'wb') as fh:
         pickle.dump(notes_book, fh)
 
 #@error_handler
