@@ -30,24 +30,18 @@ def main():
         print('1.  "load" to load AddressBook and NotesBook\n2.  "new" to create new Book\n3.  "exit"/"close" to close application:')
         command = str(input())
         if command == "load" or command == "дщфв" or command == "1":
-            print(r'Please write the full path to files addressbook.txt and notebook.txt. Example: "d:\test\":')
+            print(r'Please write the full path to file. Example: "d:\test\book.txt":')
             path = str(input())
-            path_a=path+'\\addressbook.txt'
-            path_n=path+'\\notebook.txt'
             try:
-                with open(path_a, 'rb') as fh:
+                with open(path, 'rb') as fh:
                     book = pickle.load(fh)
-            except:
-                print('Please write right path to file! This file is empty!')
-            try:
-                with open(path_n, 'rb') as fh:
                     notes_book = pickle.load(fh)
                     break
             except:
-                print('Please write right path to file! This file is empty!')    
+                print('Please write right path to file! This file is empty!')
 
         elif command == 'new' or command == "туц" or command == "2":
-            print(r'Please write the full path where to create files addressbook.txt and notebook.txt. Example: "d:\test\":')
+            print(r'Please write the full path where to create file. Example: "d:\test\book.txt":')
             path = str(input())
             book = AddressBook()
             notes_book = NotesBook()
@@ -507,11 +501,10 @@ def exit():
 
 def save():
     global path, book, notes_book
-    path_a=path+'\\addressbook.txt'
-    path_n=path+'\\notebook.txt'   
-    with open(path_a, 'wb') as fh:
+    # path_a=path+'\\addressbook.txt'
+    # path_n=path+'\\notebook.txt'   
+    with open(path, 'wb') as fh:
         pickle.dump(book, fh)
-    with open(path_n, 'wb') as fh:
         pickle.dump(notes_book, fh)
 
 #@error_handler
