@@ -79,20 +79,20 @@ class NotesBook(UserList):
         #     result += note[0]+"\n" + note[1]+"\n"
 
         # Печать шапки с названием столбцов
-        result += f" {61*'_'} \n"
-        result += '|           TAGS           |             NOTE                 |\n'
-        result += f" {61*'_'} \n"
+        result += f" {72*'_'} \n"
+        result += '|             TAGS             |                NOTE                     |\n'
+        result += f" {72*'_'} \n"
         # Печать заметок
         for note in self:
             lines = note[1].split('\n')
             counter = 0
             for line in lines:
                 if counter == 0:
-                    result += f'|{note[0]:<26}| {line:<33}|\n'
+                    result += f'|{note[0]:<30}| {line:<40}|\n'
                 else:
-                    result += f'|{" ":<26}| {line:<33}|\n'
+                    result += f'|{" ":<30}| {line:<40}|\n'
                 counter += 1
-            result += f'|{26*"_"}|{34*"_"}|\n'
+            result += f'|{30*"_"}|{40*"_"}|\n'
         return result
 
 
