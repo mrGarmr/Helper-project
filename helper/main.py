@@ -2,6 +2,7 @@
 import pickle
 import json
 import re
+import os
 from datetime import datetime, timedelta, date
 
 from .classbook import *
@@ -53,8 +54,22 @@ def main():
             print('Wrong command.')
 
     while esc_e:
+        # print(50*'*'+'WORKING WITH ADDRESSBOOK:'+50*'*')
+        # print(125*'_')
+        # print('|      COMMANDS      |')
+        # print(22*'_')
+        # print('|      "add"  \n|      "birthday"   \n|      "change"   \n|      "find"\n|      "delete"\n|      "show"\n|      "save"\n|      "exit"')
+        # print(51*'*'+'WORKING WITH NOTESBOOK:'+51*'*')
+        # print('|      COMMANDS      |')
+        # print(22*'_')
+        # print('|      "add note"\n|      "delete note"\n|      "edit note" \n|      "find note"\n|      "sort notes"\n|      "show notes"')
+        # print(51*'*'+'WORKING WITH CLEANFOLDER:'+51*'*')
+        # print('|      COMMANDS      |')
+        # print(22*'_')
+        # print('|      "clean" \n') 
         print(100*'_')
         user_inpu = input('   What do you want to do?\n   Type exact command you want to do, \n   "help" for list of commands.\n   "exit" to exit\n')
+        
         user_inpu=user_inpu.lower()
         result = handler(user_inpu)
         if result:
@@ -410,6 +425,8 @@ def change():
 
     else:
         print(f'{old_name} not in Adress Book')
+def clear():
+    os.system('cls' if os.name=='nt'else 'clear')
 
 #START CHaNGE
 @error_handler
@@ -683,7 +700,7 @@ def show_notes():
 def help_func():
     print(60*'*')
     print(20*'*'+'WORKING WITH ADDRESSBOOK:'+20*'*')
-    print('*Type "add"    to add new contact.\n*Type "birthday" to see people that have birthday nearest days.\n*Type "change" to change contact\'s phone, name or birthday.\n*Type "find"   to see information that you are looking for.\n*Type "delete" to delete information that you don\'t need.\n*Type "show"   to show you all phonebook.\n*Type "save"   to save and exit.\n*Type "exit"   to exit')
+    print('*Type "add"      to add new contact.\n*Type "birthday" to see people that have birthday nearest days.\n*Type "change"   to change contact\'s phone, name or birthday.\n*Type "clear"   to clear terminal window.\n*Type "delete"    to delete information that you don\'t need.\n*Type "find"      to see information that you are looking for.\n*Type "show"      to show you all phonebook.\n*Type "save"      to save and exit.\n*Type "exit"      to exit')
     print(20*'*'+'WORKING WITH NOTESBOOK:'+20*'*')
     print('*Type "add note"    to add new note.\n*Type "delete note"    to delete note.\n*Type "edit note"    to edit note.\n*Type "find note"    to look through notes.\n*Type "sort notes"    to sort notes.\n*Type "show notes"    to show your notes.\n')
     print(20*'*'+'WORKING WITH CLEANFOLDER:'+20*'*')
@@ -758,7 +775,7 @@ def input_error():
     return 'Wrong input! Type exact command you want to do,"exit" to exit or "help" for list of commands.'
 
 
-ANSWEARS = {'add': add, 'ad': add, '+': add, 'фвв': add,'change': change, 'срфтпу': change, 'close': exit, 'exit': exit,'учше': exit,
+ANSWEARS = {'add': add, 'ad': add, '+': add, 'фвв': add,'change': change, 'срфтпу': change, 'close': exit, 'exit': exit,'учше': exit, 'clear': clear, 'сдуфк': clear,
             'find': find, 'аштв': find, 'help': help_func, 'рудз': help_func, 'хелп': help_func, 'save': save, 'іфму': save, 'ыфму': save, 'show': show1, 'ырщц': show1, 'ірщц': show1,
             'delete':delete, 'del':delete, 'вуд':delete, 'вудуеу':delete,'birthday':birthday, 'ишкервфн':birthday, 'clean': clean_folder, 'сдуфт': clean_folder,
             'add note': add_note, 'фвв тщеу': add_note, 'delete note': delete_note, 'вудуеу тщеу': delete_note, 'edit note': edit_note, 'увше тщеу': edit_note,
@@ -768,7 +785,7 @@ ADD=['a','ad','addd','asd','asdd','sdd','adf', 'фів', 'івв', 'фівв', '
 CHANGE=['chane', 'chnge', 'cange', 'chenge', 'hange', 'chng', 'cchenge', 'chhenge', 'cheenge', 'chaange', 'сменить', 'chang', 'срутпу', 'срутп', 'менять', 'изменить', 'срфтп', 'рсфтпу', 'срутпу','cheng']
 FIND=['fnd', 'ind', 'fid', 'fin', 'faind', 'fand', 'ffind', 'fiind', 'finnd', 'findd', 'seek', 'look', 'look for', 'атв', 'афтв', 'штв', 'афт', 'поиск', 'искать', 'найти', 'шштв']
 HELP=['&', '?', 'hlp', 'what', 'why', 'where', 'how', 'elp', 'hep', 'hel', 'healp', 'halp', 'hhelp', 'heelp', 'hellp', 'helpp', 'рфдз', 'рдз', 'руз', 'руд', 'помощь']
-DELETE=['вуд', '-', 'del', 'вудуеу', 'вуфдуеу', 'dealete', 'elete', 'elet', 'delet', 'dlte', 'dlt', 'lete', 'dealete', 'вудуе', 'удалить', 'clear', 'pop']
+DELETE=['вуд', '-', 'del', 'вудуеу', 'вуфдуеу', 'dealete', 'elete', 'elet', 'delet', 'dlte', 'dlt', 'lete', 'dealete', 'вудуе', 'удалить', 'pop']
 BIRTHDAY=['lf', 'birsday', 'bersday', 'bezday', 'bethday', 'birzday', 'bearsday', 'birthdey', 'beersday', 'brthday', 'иууксвфн', 'ишквфн', 'др', 'рождение', 'бездей', 'бирсдей', 'днюха', 'birthday people', 'birthday boy', 'birthday girl', 'birthda', 'birtda', 'birth','иуервфн', 'иуівфн', 'birt']
 CLEAN=['cleen', 'clan', 'clin', 'cleane', 'cleene', 'klin', 'klean', 'lean', 'clen', 'kleen', 'суф', 'лдуут', 'лдуфт', 'сдуфту', 'клн', 'клин', 'разобрать', 'мусор']
 SHOW=['ырща', 'ырщцу', 'showe', 'schow', 'schove', 'chov', 'shove', 'schov', 'schowe', 'how', 'sho', 'shouv', 'шов', 'ірщцу', 'показать', 'рщц', 'ірщм']
