@@ -1,3 +1,0 @@
-[console_scripts]
-helper = helper.main:main
-

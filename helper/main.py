@@ -1,5 +1,6 @@
 ﻿import pathlib
 import pickle
+import json
 import re
 from datetime import datetime, timedelta, date
 
@@ -28,7 +29,7 @@ def main():
         print('1.  "load" to load AddressBook and NotesBook\n2.  "new" to create new Book\n3.  "exit"/"close" to close application:')
         command = str(input())
         if command == "load" or command == "дщфв" or command == "1":
-            print(r'Please write the full path to files addressbook.txt and notebook.txt. Example: "d:\test\":')
+            print(r'Please write the full path to file with addressbook and notebook. Example: "d:\test\book.txt":')
             path = str(input())
             try:
                 with open(path, 'rb') as fh:
@@ -108,7 +109,7 @@ def add():
         if decision == 'y' or decision == 'yes' or decision == 'нуі' or decision == 'н' or decision == 'да' or decision == 'д':
             print('Input Birthday. Expected day.month.year(Example:25.12.1970)') 
             birthday = str(input())
-            try:
+            try:                
                 birthday_d=datetime.strptime(birthday, "%d.%m.%Y").date()
                 record1.user['Birthday'] = birthday
                 break
@@ -189,7 +190,7 @@ def add():
                 save()
                 return say  
             else:
-                    print(f'Your Tags is {len(tags)} symbols. Please no more than 15 symbols')
+                print(f'Your Tags is {len(tags)} symbols. Please no more than 15 symbols')
 
         elif decision == 'exit' or decision == 'esc' or decision == 'close' or decision =='учше':
             book.add_record(record1.user)
@@ -574,8 +575,6 @@ def exit():
 
 def save():
     global path, book, notes_book
-    # path_a=path+'\\addressbook.txt'
-    # path_n=path+'\\notebook.txt'   
     with open(path, 'wb') as fh:
         pickle.dump(book, fh)
         pickle.dump(notes_book, fh)
@@ -625,10 +624,10 @@ def add_note():
         hashtag = input('Please input the hashtag of your note: \n')
         # добавление заметки в NotesBook
         if len(line)>0 and len(line)<40:
-                
-                notes_book.add_note(text, hashtag.upper())
-                flag = False
-                return "Your note is successfully saved"
+               
+            notes_book.add_note(text, hashtag.upper())
+            flag = False
+            return "Your note is successfully saved"
         else:
             print('Please no more than 30 symbols')    
 
