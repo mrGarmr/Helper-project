@@ -2,7 +2,7 @@ from setuptools import setup, find_namespace_packages
 
 
 setup(name='helper',
-      version='1.0.4',
+      version='1.0.5',
       description='Personal assistant-helper. Addressbook. Notesbook. Folder cleaner',
       author='Anna Khodyka, Olga Fomenko, Nykyforets Volodymyr',
       author_email='nvova@i.ua',

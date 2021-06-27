@@ -251,13 +251,13 @@ def change():
                     if i["Id"]==del_input:
                         i['Name'] = new_name
                         save()
-                    return say
+                        return say
             
             elif len(result)==1:
                 for i in result:
                     i['Name'] = new_name
                     save()
-                return say
+                    return say
 
             else:
                 print(f'{old_name} not in Adress Book')
@@ -307,8 +307,8 @@ def change():
                                 i['Phones'].append(new_name)
                                 save()
                                 return say
-                            else:
-                                print(f'{old_name} not in Adress Book')   
+                        else:
+                            print(f'{old_name} not in Adress Book')   
 
                     elif len(i['Phones'])==1:
                         i['Phones'].remove(old_name)
@@ -455,6 +455,9 @@ def birthday():
     if decision==1:
         print("Please write in how many days will be people's birthday.")
         n=int(input())
+        if n>= 365:
+           n=n%365
+             
         today_d = datetime.now().date()
         d = timedelta(days = n)
         bday=today_d+d
