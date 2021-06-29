@@ -122,7 +122,7 @@ def add():
         decision = str(input())
         decision = decision.lower()
         if decision == 'y' or decision == 'yes' or decision == 'нуі' or decision == 'н' or decision == 'да' or decision == 'д':
-            print('Input Birthday. Expected day.month.year(Example:25.12.1970)') 
+            print('Input Birthday. Expected day.month.year(Example:25.12.1970). If year of birth is not known, type 1111') 
             birthday = str(input())
             try:                
                 birthday_d=datetime.strptime(birthday, "%d.%m.%Y").date()
@@ -331,7 +331,7 @@ def change():
                 for i in result:
                     if i["Id"]==del_input:
                         old_name = str(input())
-                        print('Type new birthday. Expected day.month.year(Example:25.12.1970)')
+                        print('Type new birthday. Expected day.month.year(Example:25.12.1970). If year of birth is not known, type 1111')
                         new_name = str(input())
                         try:
                             new_name=datetime.strptime(new_name, "%d.%m.%Y").date()
@@ -386,7 +386,7 @@ def change():
                     print(f'{old_name} not in Adress Book')
 
         elif decision == 'email' or decision == 'e-mail' or decision == 'уьфшд' or decision == '5':
-            print('Type E-mail you want to change.)')
+            print('Type E-mail you want to change. If there are no E-mail - just press "enter".')
             old_name = str(input())
             print('Type new E-mail.')
             new_name = str(input())
